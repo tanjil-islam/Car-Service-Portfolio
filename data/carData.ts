@@ -75,7 +75,7 @@ export const keyFeatures = [
   {
     title: "CARBO-TITANIUM WEAVE",
     value: "-30%",
-    description: "Pagani's proprietary composite materials combine carbon fiber weave with titanium threads to prevent shattering upon impact.",
+    description: "Pagani's proprietary composite materials and manufacturing processes combine carbon fiber weave with titanium threads to prevent shattering upon impact.",
     image: "/images/zonda-sequence/200.jpg"
   }
 ];
