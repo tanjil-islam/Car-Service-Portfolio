@@ -1,0 +1,1168 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#00000A;
+  --holo:#00F5FF;
+  --holo-dim:rgba(0,245,255,0.15);
+  --holo-glow:rgba(0,245,255,0.6);
+  --plasma:#7B2FFF;
+  --plasma-dim:rgba(123,47,255,0.2);
+  --gold:#FFB800;
+  --steel:#0D1117;
+  --panel:#0A0E1A;
+  --grid:#0d1f2d;
+  --text:#E8F4FF;
+  --muted:#4A6FA5;
+}
+
+body{background:var(--void);font-family:'Rajdhani',sans-serif;color:var(--text);overflow-x:hidden;}
+
+/* ── ANIMATED BG ── */
+.holo-bg{
+  position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,245,255,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 50%, rgba(123,47,255,0.04) 0%, transparent 60%),
+    var(--void);
+}
+.grid-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.025) 1px, transparent 1px);
+  background-size:40px 40px;
+  animation:gridPulse 8s ease-in-out infinite;
+}
+@keyframes gridPulse{0%,100%{opacity:0.5}50%{opacity:1}}
+
+/* ── HEADER ── */
+.site-header{
+  position:relative;z-index:10;
+  padding:16px 20px 12px;
+  border-bottom:1px solid rgba(0,245,255,0.1);
+  background:rgba(0,0,10,0.95);
+  backdrop-filter:blur(20px);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo-block{display:flex;align-items:center;gap:10px}
+.logo-icon{
+  width:32px;height:32px;border:1px solid var(--holo);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:13px;color:var(--holo);
+  animation:logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 6px var(--holo-glow)}50%{box-shadow:0 0 18px var(--holo-glow),0 0 32px rgba(0,245,255,0.2)}}
+.logo-text{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--holo);letter-spacing:0.15em}
+.logo-sub{font-size:9px;color:var(--muted);letter-spacing:0.2em;margin-top:1px}
+
+.header-badge{
+  font-size:9px;letter-spacing:0.15em;color:var(--holo);
+  border:1px solid rgba(0,245,255,0.3);padding:3px 10px;border-radius:2px;
+  background:rgba(0,245,255,0.05);
+}
+
+/* ── MAIN WRAP ── */
+.content{position:relative;z-index:1;padding:16px 16px 24px;}
+
+/* ── PAGE TITLE ── */
+.page-title{
+  text-align:center;padding:20px 0 24px;
+}
+.page-title h1{
+  font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;
+  color:var(--holo);letter-spacing:0.2em;text-transform:uppercase;
+  text-shadow:0 0 20px var(--holo-glow);
+}
+.page-title p{font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:0.1em}
+
+/* ── NAV TABS ── */
+.nav-tabs{
+  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;
+  border-bottom:1px solid rgba(0,245,255,0.1);padding-bottom:14px;
+}
+.tab-btn{
+  font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:5px 12px;border:1px solid rgba(0,245,255,0.2);border-radius:2px;
+  background:transparent;color:var(--muted);cursor:pointer;
+  transition:all 0.2s;
+}
+.tab-btn:hover,.tab-btn.active{
+  color:var(--holo);border-color:var(--holo);
+  background:rgba(0,245,255,0.07);
+  box-shadow:0 0 10px rgba(0,245,255,0.15);
+}
+
+/* ── SECTION CARDS ── */
+.section-grid{display:flex;flex-direction:column;gap:10px;}
+
+.sec-card{
+  background:var(--panel);
+  border:1px solid rgba(0,245,255,0.12);
+  border-radius:4px;overflow:hidden;
+  transition:border-color 0.25s;
+  cursor:pointer;
+}
+.sec-card:hover{border-color:rgba(0,245,255,0.4);}
+.sec-card.open{border-color:var(--holo);}
+
+.sec-head{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;
+  background:linear-gradient(90deg,rgba(0,245,255,0.04) 0%, transparent 100%);
+  user-select:none;
+}
+.sec-num{
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  color:var(--holo);min-width:28px;opacity:0.7;
+}
+.sec-icon{font-size:18px;min-width:24px;text-align:center;}
+.sec-info{flex:1}
+.sec-title{font-size:14px;font-weight:600;color:var(--text);letter-spacing:0.05em}
+.sec-desc{font-size:11px;color:var(--muted);margin-top:1px;}
+.sec-badges{display:flex;gap:4px;flex-wrap:wrap;}
+.badge{
+  font-size:9px;letter-spacing:0.08em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;font-weight:600;
+}
+.b-holo{background:rgba(0,245,255,0.1);color:var(--holo);border:1px solid rgba(0,245,255,0.25);}
+.b-plasma{background:rgba(123,47,255,0.15);color:#A78BFA;border:1px solid rgba(123,47,255,0.3);}
+.b-gold{background:rgba(255,184,0,0.1);color:var(--gold);border:1px solid rgba(255,184,0,0.25);}
+.b-red{background:rgba(255,50,50,0.1);color:#FF6B6B;border:1px solid rgba(255,50,50,0.25);}
+
+.chevron-btn{color:var(--muted);font-size:12px;transition:transform 0.3s,color 0.2s;margin-left:6px;}
+.sec-card.open .chevron-btn{transform:rotate(180deg);color:var(--holo);}
+
+/* ── DETAIL PANEL ── */
+.sec-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+.sec-card.open .sec-body{max-height:900px;}
+
+.sec-inner{padding:0 14px 16px;}
+
+/* ── VISUAL PREVIEW ── */
+.preview-box{
+  background:var(--steel);
+  border:1px solid rgba(0,245,255,0.08);
+  border-radius:3px;margin-bottom:14px;overflow:hidden;
+  position:relative;
+}
+
+/* Hero Preview */
+.prev-hero-sci{
+  height:100px;
+  background:radial-gradient(ellipse 100% 100% at 50% 110%, rgba(0,245,255,0.08) 0%,transparent 70%),
+  linear-gradient(180deg,#00000A 0%,#050510 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  position:relative;overflow:hidden;
+}
+.prev-hero-sci::before{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--holo),var(--plasma),transparent);
+  animation:hbar 3s ease-in-out infinite;
+}
+@keyframes hbar{0%,100%{opacity:0.3;transform:scaleX(0.3)}50%{opacity:1;transform:scaleX(1)}}
+.prev-particle{
+  position:absolute;width:2px;height:2px;background:var(--holo);border-radius:50%;
+  animation:float 4s ease-in-out infinite;
+}
+.prev-particle:nth-child(2){left:15%;top:30%;animation-delay:1s;background:var(--plasma);}
+.prev-particle:nth-child(3){left:75%;top:60%;animation-delay:2s;}
+.prev-particle:nth-child(4){left:50%;top:20%;animation-delay:0.5s;background:var(--gold);}
+@keyframes float{0%,100%{transform:translateY(0);opacity:0.3}50%{transform:translateY(-8px);opacity:1}}
+.hero-eyebrow{font-size:8px;letter-spacing:0.35em;color:var(--holo);text-transform:uppercase;}
+.hero-h1{font-family:'Orbitron',sans-serif;font-size:16px;color:var(--text);letter-spacing:0.08em;text-align:center;}
+.hero-cta-row{display:flex;gap:8px;margin-top:6px;}
+.hero-cta{
+  font-size:8px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:4px 14px;border-radius:2px;
+}
+.cta-primary{background:var(--holo);color:#000;font-weight:700;}
+.cta-secondary{border:1px solid var(--holo);color:var(--holo);}
+
+/* 3D Car Preview */
+.prev-3d{
+  height:90px;
+  background:radial-gradient(ellipse at center,rgba(0,245,255,0.06) 0%,transparent 70%),#050510;
+  display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;
+}
+.car-wire{
+  width:120px;height:55px;border:1px solid rgba(0,245,255,0.4);border-radius:4px;
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.car-wire::before{content:'';position:absolute;inset:4px;border:1px dashed rgba(0,245,255,0.15);}
+.car-wire-label{font-size:8px;color:var(--holo);letter-spacing:0.1em;}
+.car-dots{position:absolute;inset:0;}
+.car-dot{
+  position:absolute;width:4px;height:4px;background:var(--holo);border-radius:50%;
+  box-shadow:0 0 6px var(--holo-glow);
+}
+.deg-ring{position:absolute;right:8px;top:50%;transform:translateY(-50%);}
+.deg-circle{
+  width:50px;height:50px;border:1px solid rgba(0,245,255,0.3);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  animation:spin360 8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+.deg-inner{
+  width:34px;height:34px;border:1px dashed rgba(0,245,255,0.2);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  animation:spin360 8s linear reverse infinite;
+  font-size:7px;color:var(--holo);letter-spacing:0.05em;
+}
+
+/* Services preview */
+.prev-services-sci{
+  display:flex;gap:5px;padding:10px;height:72px;align-items:stretch;
+}
+.svc-mini{
+  flex:1;border:1px solid rgba(0,245,255,0.15);border-radius:3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:rgba(0,245,255,0.03);transition:border-color 0.2s;font-size:14px;
+}
+.svc-mini:hover{border-color:var(--holo);}
+.svc-mini-txt{font-size:8px;color:var(--muted);}
+
+/* Booking preview */
+.prev-booking-sci{
+  padding:10px 14px;display:flex;flex-direction:column;gap:6px;
+}
+.book-row{display:flex;gap:6px;}
+.book-field{flex:1;height:22px;background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.15);border-radius:2px;}
+.book-btn{
+  height:22px;padding:0 14px;background:linear-gradient(135deg,var(--holo),var(--plasma));
+  font-size:8px;color:#000;font-weight:700;border-radius:2px;display:flex;align-items:center;
+  letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;
+}
+
+/* Team preview */
+.prev-team{display:flex;gap:5px;padding:10px;height:78px;align-items:center;}
+.team-card-mini{
+  flex:1;border:1px solid rgba(123,47,255,0.2);border-radius:3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:rgba(123,47,255,0.05);height:100%;
+}
+.avatar-mini{
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:10px;
+  border:1px solid rgba(123,47,255,0.4);
+}
+.team-name-mini{font-size:7px;color:var(--text);}
+.team-role-mini{font-size:7px;color:var(--muted);}
+
+/* Rating preview */
+.prev-rating{
+  padding:12px;display:flex;align-items:center;gap:14px;
+}
+.rating-big{text-align:center;}
+.rating-num{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;color:var(--gold);line-height:1;}
+.rating-stars{font-size:12px;color:var(--gold);margin-top:2px;}
+.rating-bars{flex:1;display:flex;flex-direction:column;gap:3px;}
+.r-bar-row{display:flex;align-items:center;gap:5px;}
+.r-bar-lbl{font-size:8px;color:var(--muted);min-width:8px;}
+.r-bar-track{flex:1;height:3px;background:rgba(255,184,0,0.1);border-radius:2px;}
+.r-bar-fill{height:100%;background:var(--gold);border-radius:2px;}
+
+/* Gallery preview */
+.prev-gallery-sci{
+  height:72px;display:flex;gap:4px;padding:8px;
+}
+.gal-cell{
+  flex:1;border:1px solid rgba(0,245,255,0.12);border-radius:2px;
+  background:linear-gradient(135deg,#0a0e1a,#050510);
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  position:relative;overflow:hidden;
+}
+.gal-cell::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--holo),transparent);
+  opacity:0;transition:opacity 0.2s;
+}
+.gal-cell:hover::after{opacity:1;}
+
+/* ── COMPONENT DETAIL ── */
+.detail-section{margin-top:12px;}
+.detail-label{
+  font-size:9px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--holo);margin-bottom:6px;display:flex;align-items:center;gap:6px;
+}
+.detail-label::before{content:'';width:16px;height:1px;background:var(--holo);}
+.chip-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.chip{
+  font-size:10px;color:rgba(232,244,255,0.7);
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+  border-radius:3px;padding:3px 9px;
+}
+.chip.h{color:var(--holo);background:rgba(0,245,255,0.06);border-color:rgba(0,245,255,0.2);}
+.chip.p{color:#A78BFA;background:rgba(123,47,255,0.08);border-color:rgba(123,47,255,0.2);}
+.chip.g{color:var(--gold);background:rgba(255,184,0,0.06);border-color:rgba(255,184,0,0.2);}
+
+/* ── FILE TREE ── */
+.filetree{
+  background:#010508;border:1px solid rgba(0,245,255,0.1);border-radius:4px;
+  font-family:'Courier New',monospace;font-size:10.5px;line-height:2;
+  padding:14px 16px;margin-top:10px;
+}
+.ft-head{
+  font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:0.15em;
+  color:var(--holo);padding:8px 16px;
+  border-bottom:1px solid rgba(0,245,255,0.1);margin:-14px -16px 12px;
+  background:rgba(0,245,255,0.03);
+}
+.d{color:var(--holo);}
+.f{color:rgba(200,220,255,0.7);}
+.c{color:#3d5a80;margin-left:6px;}
+.i1{padding-left:14px;display:block;}
+.i2{padding-left:28px;display:block;}
+.i3{padding-left:42px;display:block;}
+
+/* ── TECH STACK ── */
+.tech-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px;
+}
+.tech-card{
+  background:var(--panel);border:1px solid rgba(0,245,255,0.12);border-radius:3px;
+  padding:10px 12px;
+}
+.tech-name{font-size:12px;font-weight:600;color:var(--text);}
+.tech-use{font-size:10px;color:var(--muted);margin-top:2px;}
+.tech-dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;
+}
+
+/* ── LEGEND ── */
+.legend{
+  display:flex;flex-wrap:wrap;gap:10px;padding:12px 0 0;
+  border-top:1px solid rgba(0,245,255,0.08);margin-top:10px;
+}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
+
+/* ── ACTIVE TAB VIEWS ── */
+.tab-view{display:none;}
+.tab-view.active{display:block;}
+</style>
+</head>
+<body>
+
+<div class="holo-bg"></div>
+<div class="grid-overlay"></div>
+
+<div class="site-header">
+  <div class="logo-block">
+    <div class="logo-icon">GT</div>
+    <div>
+      <div class="logo-text">GEARTECH</div>
+      <div class="logo-sub">Precision Auto Services</div>
+    </div>
+  </div>
+  <div class="header-badge">SYSTEM BLUEPRINT v2.0</div>
+</div>
+
+<div class="content">
+
+  <div class="page-title">
+    <h1>Holographic Car Service Portal</h1>
+    <p>Sci-Fi · Cinematic · Next.js + Framer Motion + Three.js + 21st.dev</p>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('structure')">Page Structure</button>
+    <button class="tab-btn" onclick="showTab('filetree')">File Tree</button>
+    <button class="tab-btn" onclick="showTab('techstack')">Tech Stack</button>
+    <button class="tab-btn" onclick="showTab('animation')">Animation Map</button>
+  </div>
+
+  <!-- ══════════ TAB: STRUCTURE ══════════ -->
+  <div class="tab-view active" id="tab-structure">
+  <div class="section-grid">
+
+    <!-- 01 HERO -->
+    <div class="sec-card open" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">01</div>
+        <div class="sec-icon">🌌</div>
+        <div class="sec-info">
+          <div class="sec-title">Hero — Holographic Cinematic Landing</div>
+          <div class="sec-desc">Sci-fi particle field · 3D hologram car · animated HUD overlay</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Three.js</span>
+          <span class="badge b-plasma">Framer</span>
+          <span class="badge b-gold">Particles</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box">
+            <div class="prev-hero-sci">
+              <div class="prev-particle"></div>
+              <div class="prev-particle"></div>
+              <div class="prev-particle"></div>
+              <div class="prev-particle"></div>
+              <div class="hero-eyebrow">[ System Online ] — Premium Auto Engineering</div>
+              <div class="hero-h1">WHERE MACHINES<br>MEET MASTERY</div>
+              <div class="hero-cta-row">
+                <div class="hero-cta cta-primary">Book Service</div>
+                <div class="hero-cta cta-secondary">Explore Fleet</div>
+              </div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Background System</div>
+            <div class="chip-row">
+              <span class="chip h">Three.js particle nebula (tsparticles)</span>
+              <span class="chip h">Animated HUD grid overlay (CSS)</span>
+              <span class="chip h">Scanline sweep animation</span>
+              <span class="chip p">Floating holographic car silhouette (Three.js)</span>
+              <span class="chip">Radial bloom glow</span>
+            </div>
+            <div class="detail-label">Navbar Components</div>
+            <div class="chip-row">
+              <span class="chip h">Sticky glassmorphism nav</span>
+              <span class="chip">Logo + animated pulse ring</span>
+              <span class="chip">Nav links with holo underline on hover</span>
+              <span class="chip g">[ Book Now ] CTA button (gold gradient)</span>
+              <span class="chip p">Mobile: slide-in drawer (Framer)</span>
+            </div>
+            <div class="detail-label">Hero Content</div>
+            <div class="chip-row">
+              <span class="chip h">Orbitron eyebrow text (typewriter effect)</span>
+              <span class="chip h">H1 split-word stagger animate (Framer)</span>
+              <span class="chip">Sub-headline fade-up delay</span>
+              <span class="chip g">Dual CTA: Book Service + Explore Fleet</span>
+              <span class="chip">Scroll indicator (animated chevron)</span>
+            </div>
+            <div class="detail-label">Framer Motion Animations</div>
+            <div class="chip-row">
+              <span class="chip p">staggerChildren on headline words</span>
+              <span class="chip p">useScroll parallax on bg</span>
+              <span class="chip p">AnimatePresence page transition</span>
+              <span class="chip h">Magnetic hover on CTA buttons</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 3D CAR VIEWER -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">02</div>
+        <div class="sec-icon">🏎️</div>
+        <div class="sec-info">
+          <div class="sec-title">3D Fleet Showcase — 360° Viewer</div>
+          <div class="sec-desc">Nissan GT-R · Supra MK3/MK4 · BMW M3 — interactive Three.js viewer</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Three.js</span>
+          <span class="badge b-plasma">GLB Models</span>
+          <span class="badge b-gold">360°</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box">
+            <div class="prev-3d">
+              <div>
+                <div style="font-size:8px;color:var(--holo);letter-spacing:0.15em;margin-bottom:5px;">SELECT VEHICLE</div>
+                <div style="display:flex;gap:5px;margin-bottom:8px;">
+                  <span style="font-size:8px;border:1px solid var(--holo);padding:2px 7px;color:var(--holo);border-radius:2px;">GT-R</span>
+                  <span style="font-size:8px;border:1px solid rgba(0,245,255,0.2);padding:2px 7px;color:var(--muted);border-radius:2px;">MK4</span>
+                  <span style="font-size:8px;border:1px solid rgba(0,245,255,0.2);padding:2px 7px;color:var(--muted);border-radius:2px;">MK3</span>
+                  <span style="font-size:8px;border:1px solid rgba(0,245,255,0.2);padding:2px 7px;color:var(--muted);border-radius:2px;">BMW</span>
+                </div>
+                <div class="car-wire">
+                  <div class="car-dots">
+                    <div class="car-dot" style="left:10%;top:20%"></div>
+                    <div class="car-dot" style="right:10%;top:20%"></div>
+                    <div class="car-dot" style="left:20%;bottom:15%"></div>
+                    <div class="car-dot" style="right:20%;bottom:15%"></div>
+                  </div>
+                  <div class="car-wire-label">NISSAN GT-R R35</div>
+                </div>
+              </div>
+              <div class="deg-ring">
+                <div class="deg-circle">
+                  <div class="deg-inner">360°</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">3D Viewer Features</div>
+            <div class="chip-row">
+              <span class="chip h">Three.js WebGL canvas (react-three-fiber)</span>
+              <span class="chip h">OrbitControls — drag to rotate 360°</span>
+              <span class="chip p">GLB/GLTF car models loading</span>
+              <span class="chip">HDRI environment lighting (Drei)</span>
+              <span class="chip h">Holographic wireframe overlay toggle</span>
+              <span class="chip g">X-ray / Blueprint view mode</span>
+            </div>
+            <div class="detail-label">Car Models & HUD Overlays</div>
+            <div class="chip-row">
+              <span class="chip p">Nissan GT-R R35 — with spec callouts</span>
+              <span class="chip p">Toyota Supra MK4 (A80) — interactive hotspots</span>
+              <span class="chip p">Toyota Supra MK3 (A70) — blueprint mode</span>
+              <span class="chip p">BMW M3 (E46/F80) — scan reveal</span>
+            </div>
+            <div class="detail-label">Vehicle Selector UI</div>
+            <div class="chip-row">
+              <span class="chip h">Tab selector with holo underline slide</span>
+              <span class="chip">Animated crossfade between models</span>
+              <span class="chip g">Spec panel (HP, torque, 0-60, weight)</span>
+              <span class="chip">Color picker (3D material swap)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 ABOUT -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">03</div>
+        <div class="sec-icon">⚡</div>
+        <div class="sec-info">
+          <div class="sec-title">About — The Garage Story</div>
+          <div class="sec-desc">Brand story · mission · cinematic timeline · values</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-plasma">Framer</span>
+          <span class="badge b-holo">Timeline</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box" style="padding:12px 14px;">
+            <div style="display:flex;gap:12px;align-items:center;">
+              <div style="flex:1">
+                <div style="font-size:8px;color:var(--holo);letter-spacing:0.2em;margin-bottom:4px;">// ABOUT US</div>
+                <div style="font-family:'Orbitron',sans-serif;font-size:13px;color:var(--text);margin-bottom:5px;">PRECISION BORN<br>FROM PASSION</div>
+                <div style="font-size:9px;color:var(--muted);line-height:1.6;">Founded in 2010, GearTech has redefined what automotive excellence means in this city.</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="width:60px;height:60px;border:1px solid rgba(0,245,255,0.2);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:22px;">🏭</div>
+              </div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Content Blocks</div>
+            <div class="chip-row">
+              <span class="chip h">Cinematic split layout (text | image)</span>
+              <span class="chip">Brand manifesto paragraph</span>
+              <span class="chip">Animated horizontal timeline (founded → now)</span>
+              <span class="chip p">Parallax garage photo reveal (Framer)</span>
+            </div>
+            <div class="detail-label">Values Grid</div>
+            <div class="chip-row">
+              <span class="chip g">4× value cards (icon · title · desc)</span>
+              <span class="chip h">Holo border on scroll enter</span>
+              <span class="chip">Precision · Speed · Trust · Innovation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 OWNER -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">04</div>
+        <div class="sec-icon">👤</div>
+        <div class="sec-info">
+          <div class="sec-title">Meet the Owner — Founder Story</div>
+          <div class="sec-desc">Personal bio · credentials · signature quote · social links</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-plasma">Framer</span>
+          <span class="badge b-gold">Portrait</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box" style="padding:12px 14px;">
+            <div style="display:flex;gap:12px;align-items:center;">
+              <div style="width:56px;height:56px;border-radius:50%;border:2px solid var(--holo);background:rgba(0,245,255,0.08);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👤</div>
+              <div>
+                <div style="font-family:'Orbitron',sans-serif;font-size:12px;color:var(--text);">KAITO MORI</div>
+                <div style="font-size:9px;color:var(--holo);letter-spacing:0.1em;margin-top:2px;">Founder & Master Technician</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:4px;line-height:1.5;">"Every car has a soul. My job is to keep it alive."</div>
+                <div style="display:flex;gap:5px;margin-top:6px;">
+                  <span style="font-size:8px;color:var(--gold);">★ 20yrs exp</span>
+                  <span style="font-size:8px;color:var(--muted);">· ASE Certified</span>
+                  <span style="font-size:8px;color:var(--muted);">· JDM Specialist</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Components</div>
+            <div class="chip-row">
+              <span class="chip h">Full-bleed portrait with holo ring reveal</span>
+              <span class="chip p">Signature quote with typewriter animation</span>
+              <span class="chip">Credentials badge row (ASE · JDM · OEM)</span>
+              <span class="chip g">Experience counter (animated)</span>
+              <span class="chip">Instagram / LinkedIn social links</span>
+            </div>
+            <div class="detail-label">21st.dev Components Used</div>
+            <div class="chip-row">
+              <span class="chip p">Avatar with animated halo ring</span>
+              <span class="chip p">Animated text gradient on name</span>
+              <span class="chip h">Magnetic social icon links</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 TEAM -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">05</div>
+        <div class="sec-icon">🔧</div>
+        <div class="sec-info">
+          <div class="sec-title">The Team — Crew Roster</div>
+          <div class="sec-desc">Technician profiles · specializations · 3D holographic cards</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-plasma">3D Cards</span>
+          <span class="badge b-holo">Framer</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box">
+            <div class="prev-team">
+              <div class="team-card-mini"><div class="avatar-mini">🧑</div><div class="team-name-mini">Alex K.</div><div class="team-role-mini">Engine Spec.</div></div>
+              <div class="team-card-mini"><div class="avatar-mini">👩</div><div class="team-name-mini">Yuki T.</div><div class="team-role-mini">Diagnostics</div></div>
+              <div class="team-card-mini"><div class="avatar-mini">🧔</div><div class="team-name-mini">Marco R.</div><div class="team-role-mini">Bodywork</div></div>
+              <div class="team-card-mini"><div class="avatar-mini">👱</div><div class="team-name-mini">Sam D.</div><div class="team-role-mini">JDM Tuning</div></div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Team Card Components</div>
+            <div class="chip-row">
+              <span class="chip p">3D tilt card on hover (react-tilt)</span>
+              <span class="chip h">Holographic sheen effect on card surface</span>
+              <span class="chip">Portrait photo + name + role</span>
+              <span class="chip g">Specialty tags (JDM · European · American)</span>
+              <span class="chip">Certifications row</span>
+              <span class="chip p">Plasma border pulse on hover</span>
+            </div>
+            <div class="detail-label">Layout</div>
+            <div class="chip-row">
+              <span class="chip h">4-col grid → 2-col mobile</span>
+              <span class="chip">Stagger reveal on scroll enter (Framer)</span>
+              <span class="chip p">21st.dev: HoverCard with extended bio</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 SERVICES -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">06</div>
+        <div class="sec-icon">⚙️</div>
+        <div class="sec-info">
+          <div class="sec-title">Services — What We Master</div>
+          <div class="sec-desc">Service categories · pricing tiers · animated feature cards</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Animated</span>
+          <span class="badge b-gold">Pricing</span>
+          <span class="badge b-plasma">Framer</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box">
+            <div class="prev-services-sci">
+              <div class="svc-mini">🔩<div class="svc-mini-txt">Engine</div></div>
+              <div class="svc-mini">💧<div class="svc-mini-txt">Oil & Fluids</div></div>
+              <div class="svc-mini">🏁<div class="svc-mini-txt">Performance</div></div>
+              <div class="svc-mini">✨<div class="svc-mini-txt">Detailing</div></div>
+              <div class="svc-mini">🔋<div class="svc-mini-txt">Electrical</div></div>
+              <div class="svc-mini">🛡️<div class="svc-mini-txt">PPF/Ceramic</div></div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Service Categories</div>
+            <div class="chip-row">
+              <span class="chip h">Engine Rebuild & Tune</span>
+              <span class="chip h">Turbo / Supercharger Install</span>
+              <span class="chip h">Suspension & Alignment</span>
+              <span class="chip h">PPF + Ceramic Coating</span>
+              <span class="chip h">Full Interior Detail</span>
+              <span class="chip h">ECU Remap / Dyno Tune</span>
+            </div>
+            <div class="detail-label">Card Animation (Framer)</div>
+            <div class="chip-row">
+              <span class="chip p">whileHover: scale + border glow</span>
+              <span class="chip p">viewport once stagger reveal</span>
+              <span class="chip h">Icon: morphing SVG on hover</span>
+              <span class="chip g">Pricing badge slide-in</span>
+            </div>
+            <div class="detail-label">21st.dev Components</div>
+            <div class="chip-row">
+              <span class="chip p">Spotlight card effect</span>
+              <span class="chip p">Animated gradient border</span>
+              <span class="chip h">Beam divider between tiers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 PREVIOUS WORK -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">07</div>
+        <div class="sec-icon">🎬</div>
+        <div class="sec-info">
+          <div class="sec-title">Previous Work — Case Files</div>
+          <div class="sec-desc">Before/after · project gallery · masonry grid · lightbox</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Gallery</span>
+          <span class="badge b-plasma">Lightbox</span>
+          <span class="badge b-gold">Before/After</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box">
+            <div class="prev-gallery-sci">
+              <div class="gal-cell">🏎️</div>
+              <div class="gal-cell" style="flex:1.5">🔧</div>
+              <div class="gal-cell">✨</div>
+              <div class="gal-cell">🚗</div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Gallery Features</div>
+            <div class="chip-row">
+              <span class="chip h">Masonry grid layout (CSS columns)</span>
+              <span class="chip h">Filter tabs: All · Engine · Body · Interior · JDM</span>
+              <span class="chip p">Animated filter transition (Framer layout)</span>
+              <span class="chip">Fullscreen lightbox with prev/next</span>
+              <span class="chip g">Before/After drag slider</span>
+            </div>
+            <div class="detail-label">Case File Cards</div>
+            <div class="chip-row">
+              <span class="chip p">Project name + car model + service done</span>
+              <span class="chip">Duration + cost badge</span>
+              <span class="chip h">Hover: holo overlay with view CTA</span>
+              <span class="chip g">Featured project: full-bleed banner</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 TESTIMONIALS -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">08</div>
+        <div class="sec-icon">💬</div>
+        <div class="sec-info">
+          <div class="sec-title">Testimonials — Client Transmissions</div>
+          <div class="sec-desc">Auto-scroll marquee · star rating · client avatar · car model</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Marquee</span>
+          <span class="badge b-plasma">Framer</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box" style="padding:12px 14px;">
+            <div style="border-left:2px solid var(--holo);padding-left:10px;">
+              <div style="font-size:10px;color:var(--gold);">★★★★★</div>
+              <div style="font-family:'Rajdhani',sans-serif;font-style:italic;font-size:11px;color:var(--text);margin-top:3px;line-height:1.5;">"They transformed my GT-R into a track weapon. The attention to detail is unmatched."</div>
+              <div style="font-size:9px;color:var(--holo);margin-top:5px;">— Hiroshi K. · Nissan GT-R R35 Owner</div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Marquee System</div>
+            <div class="chip-row">
+              <span class="chip h">Infinite horizontal scroll marquee (Framer)</span>
+              <span class="chip">Pause on hover</span>
+              <span class="chip p">Dual row — opposite directions</span>
+            </div>
+            <div class="detail-label">Review Card</div>
+            <div class="chip-row">
+              <span class="chip g">Star rating (animated fill on enter)</span>
+              <span class="chip">Quote text · client name · car owned</span>
+              <span class="chip h">Holo left-border accent</span>
+              <span class="chip p">Avatar with plasma ring</span>
+            </div>
+            <div class="detail-label">21st.dev Components</div>
+            <div class="chip-row">
+              <span class="chip p">InfiniteMovingCards component</span>
+              <span class="chip h">Gradient fade mask on edges</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 RATING -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">09</div>
+        <div class="sec-icon">⭐</div>
+        <div class="sec-info">
+          <div class="sec-title">Rating System — Performance Metrics</div>
+          <div class="sec-desc">Overall score · breakdown bars · live review form</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-gold">Live Rating</span>
+          <span class="badge b-plasma">Framer</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box">
+            <div class="prev-rating">
+              <div class="rating-big">
+                <div class="rating-num">4.9</div>
+                <div class="rating-stars">★★★★★</div>
+                <div style="font-size:8px;color:var(--muted);margin-top:3px;">286 reviews</div>
+              </div>
+              <div class="rating-bars">
+                <div class="r-bar-row"><span class="r-bar-lbl">5</span><div class="r-bar-track"><div class="r-bar-fill" style="width:90%"></div></div></div>
+                <div class="r-bar-row"><span class="r-bar-lbl">4</span><div class="r-bar-track"><div class="r-bar-fill" style="width:7%"></div></div></div>
+                <div class="r-bar-row"><span class="r-bar-lbl">3</span><div class="r-bar-track"><div class="r-bar-fill" style="width:2%"></div></div></div>
+                <div class="r-bar-row"><span class="r-bar-lbl">2</span><div class="r-bar-track"><div class="r-bar-fill" style="width:1%"></div></div></div>
+                <div class="r-bar-row"><span class="r-bar-lbl">1</span><div class="r-bar-track"><div class="r-bar-fill" style="width:0%"></div></div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:5px;">
+                <div style="font-size:8px;color:var(--muted);">Quality<br><span style="color:var(--gold);">★★★★★</span></div>
+                <div style="font-size:8px;color:var(--muted);">Speed<br><span style="color:var(--gold);">★★★★☆</span></div>
+                <div style="font-size:8px;color:var(--muted);">Value<br><span style="color:var(--gold);">★★★★★</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Rating Dashboard</div>
+            <div class="chip-row">
+              <span class="chip g">Large animated score display (Orbitron)</span>
+              <span class="chip">5-bar breakdown (animated widths on enter)</span>
+              <span class="chip h">Category scores: Quality · Speed · Value</span>
+              <span class="chip p">Google / Facebook review sync badge</span>
+            </div>
+            <div class="detail-label">Leave a Review Form</div>
+            <div class="chip-row">
+              <span class="chip h">Interactive star click (Framer spring)</span>
+              <span class="chip">Name · car model · review textarea</span>
+              <span class="chip g">Submit → optimistic UI update</span>
+              <span class="chip p">Confetti burst on submit (canvas)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 BOOKING -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">10</div>
+        <div class="sec-icon">📅</div>
+        <div class="sec-info">
+          <div class="sec-title">Booking — Mission Control</div>
+          <div class="sec-desc">Multi-step form · calendar · service picker · confirmation</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Multi-step</span>
+          <span class="badge b-plasma">Calendar</span>
+          <span class="badge b-gold">API Route</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="preview-box">
+            <div class="prev-booking-sci">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:8px;color:var(--holo);letter-spacing:0.1em;">STEP 1: SELECT SERVICE</span>
+                <span style="font-size:8px;color:var(--muted);">1 / 4</span>
+              </div>
+              <div style="width:100%;height:3px;background:rgba(0,245,255,0.1);border-radius:2px;margin-bottom:8px;">
+                <div style="width:25%;height:100%;background:var(--holo);border-radius:2px;"></div>
+              </div>
+              <div class="book-row">
+                <div class="book-field"></div>
+                <div class="book-field"></div>
+              </div>
+              <div class="book-row">
+                <div class="book-field"></div>
+                <div class="book-btn">Confirm Booking</div>
+              </div>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Multi-Step Flow</div>
+            <div class="chip-row">
+              <span class="chip h">Step 1: Choose service category</span>
+              <span class="chip h">Step 2: Pick car model + describe issue</span>
+              <span class="chip h">Step 3: Calendar date/time picker</span>
+              <span class="chip h">Step 4: Contact info + confirmation</span>
+            </div>
+            <div class="detail-label">Form Animations (Framer)</div>
+            <div class="chip-row">
+              <span class="chip p">AnimatePresence step slide transition</span>
+              <span class="chip p">Progress bar spring animation</span>
+              <span class="chip h">Field focus: holo underline expand</span>
+              <span class="chip g">Success: holographic confirmation screen</span>
+            </div>
+            <div class="detail-label">Backend (Next.js API)</div>
+            <div class="chip-row">
+              <span class="chip g">app/api/booking/route.ts</span>
+              <span class="chip">Email notification (Nodemailer / Resend)</span>
+              <span class="chip h">Google Calendar integration</span>
+              <span class="chip">SMS confirmation (Twilio)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 CONTACT -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">11</div>
+        <div class="sec-icon">📡</div>
+        <div class="sec-info">
+          <div class="sec-title">Contact — Signal Us</div>
+          <div class="sec-desc">Holographic map · contact form · social links · hours</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Map</span>
+          <span class="badge b-plasma">Form</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="detail-section">
+            <div class="detail-label">Components</div>
+            <div class="chip-row">
+              <span class="chip h">Mapbox / Google Maps with dark sci-fi theme</span>
+              <span class="chip">Location pin with pulse animation</span>
+              <span class="chip p">Quick contact form (name · email · message)</span>
+              <span class="chip">WhatsApp direct link button</span>
+              <span class="chip g">Business hours grid</span>
+              <span class="chip h">Social links: IG · TikTok · YouTube</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 FOOTER -->
+    <div class="sec-card" onclick="toggle(this)">
+      <div class="sec-head">
+        <div class="sec-num">12</div>
+        <div class="sec-icon">🔚</div>
+        <div class="sec-info">
+          <div class="sec-title">Footer — System Shutdown</div>
+          <div class="sec-desc">Logo · links · copyright · holo separator line</div>
+        </div>
+        <div class="sec-badges">
+          <span class="badge b-holo">Animated</span>
+        </div>
+        <span class="chevron-btn">▾</span>
+      </div>
+      <div class="sec-body">
+        <div class="sec-inner">
+          <div class="detail-section">
+            <div class="detail-label">Components</div>
+            <div class="chip-row">
+              <span class="chip h">Animated holo separator (scanline)</span>
+              <span class="chip">Logo + tagline</span>
+              <span class="chip">4-column link grid</span>
+              <span class="chip p">Newsletter signup with holo input</span>
+              <span class="chip g">Social icons row</span>
+              <span class="chip">Copyright · Privacy · Terms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="leg-item"><span class="badge b-holo">HOLO</span> Three.js / CSS animation</div>
+      <div class="leg-item"><span class="badge b-plasma">PLASMA</span> Framer Motion</div>
+      <div class="leg-item"><span class="badge b-gold">GOLD</span> Interactive / API</div>
+      <div class="leg-item"><span class="badge b-red">21st</span> 21st.dev component</div>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- ══════════ TAB: FILE TREE ══════════ -->
+  <div class="tab-view" id="tab-filetree">
+  <div class="filetree">
+    <div class="ft-head">📁 GEARTECH NEXT.JS PROJECT STRUCTURE</div>
+    <span class="d">📁 geartech-portal/</span>
+    <span class="i1 d">📁 app/</span>
+    <span class="i2 f">📄 layout.tsx <span class="c">// root layout, fonts, metadata, providers</span></span>
+    <span class="i2 f">📄 page.tsx <span class="c">// landing page (all sections)</span></span>
+    <span class="i2 f">📄 globals.css <span class="c">// CSS vars, animations, Tailwind</span></span>
+    <span class="i2 d">📁 booking/</span>
+    <span class="i3 f">📄 page.tsx <span class="c">// standalone booking page</span></span>
+    <span class="i2 d">📁 fleet/</span>
+    <span class="i3 f">📄 page.tsx <span class="c">// full 3D fleet viewer page</span></span>
+    <span class="i2 d">📁 work/</span>
+    <span class="i3 f">📄 page.tsx <span class="c">// previous work gallery</span></span>
+    <span class="i2 d">📁 api/</span>
+    <span class="i3 f">📄 booking/route.ts <span class="c">// POST handler + email/SMS</span></span>
+    <span class="i3 f">📄 reviews/route.ts <span class="c">// review submission</span></span>
+    <span class="i3 f">📄 contact/route.ts <span class="c">// contact form</span></span>
+    <span class="i1 d">📁 components/</span>
+    <span class="i2 d">📁 layout/</span>
+    <span class="i3 f">📄 Navbar.tsx</span>
+    <span class="i3 f">📄 Footer.tsx</span>
+    <span class="i3 f">📄 PageTransition.tsx <span class="c">// Framer AnimatePresence</span></span>
+    <span class="i2 d">📁 sections/</span>
+    <span class="i3 f">📄 HeroSection.tsx <span class="c">// particles + typewriter + CTA</span></span>
+    <span class="i3 f">📄 FleetViewer.tsx <span class="c">// Three.js 360° car viewer</span></span>
+    <span class="i3 f">📄 AboutSection.tsx</span>
+    <span class="i3 f">📄 OwnerSection.tsx</span>
+    <span class="i3 f">📄 TeamSection.tsx <span class="c">// 3D tilt cards</span></span>
+    <span class="i3 f">📄 ServicesSection.tsx</span>
+    <span class="i3 f">📄 WorkGallery.tsx <span class="c">// masonry + lightbox</span></span>
+    <span class="i3 f">📄 TestimonialsSection.tsx <span class="c">// infinite marquee</span></span>
+    <span class="i3 f">📄 RatingSection.tsx</span>
+    <span class="i3 f">📄 BookingSection.tsx <span class="c">// multi-step form</span></span>
+    <span class="i3 f">📄 ContactSection.tsx</span>
+    <span class="i2 d">📁 ui/ <span class="c">// 21st.dev + custom atoms</span></span>
+    <span class="i3 f">📄 HoloButton.tsx</span>
+    <span class="i3 f">📄 GlassCard.tsx</span>
+    <span class="i3 f">📄 SpotlightCard.tsx <span class="c">// 21st.dev</span></span>
+    <span class="i3 f">📄 InfiniteMarquee.tsx <span class="c">// 21st.dev</span></span>
+    <span class="i3 f">📄 StarRating.tsx</span>
+    <span class="i3 f">📄 HoloBorder.tsx</span>
+    <span class="i3 f">📄 ParticleField.tsx <span class="c">// tsparticles</span></span>
+    <span class="i2 d">📁 3d/</span>
+    <span class="i3 f">📄 CarCanvas.tsx <span class="c">// r3f Canvas wrapper</span></span>
+    <span class="i3 f">📄 CarModel.tsx <span class="c">// GLB loader + controls</span></span>
+    <span class="i3 f">📄 HoloEnvironment.tsx <span class="c">// HDRI + grid floor</span></span>
+    <span class="i3 f">📄 CarSpecs.tsx <span class="c">// HUD overlay on canvas</span></span>
+    <span class="i1 d">📁 lib/</span>
+    <span class="i2 f">📄 animations.ts <span class="c">// Framer variants library</span></span>
+    <span class="i2 f">📄 data.ts <span class="c">// services, team, reviews</span></span>
+    <span class="i2 f">📄 cars.ts <span class="c">// fleet model configs</span></span>
+    <span class="i2 f">📄 mailer.ts <span class="c">// Resend / Nodemailer</span></span>
+    <span class="i1 d">📁 public/</span>
+    <span class="i2 d">📁 models/ <span class="c">// .glb car models</span></span>
+    <span class="i2 d">📁 images/ · 📁 videos/ · 📁 hdri/</span>
+    <span class="i1 f">📄 tailwind.config.ts</span>
+    <span class="i1 f">📄 next.config.ts <span class="c">// r3f, video, model loaders</span></span>
+    <span class="i1 f">📄 tsconfig.json</span>
+  </div>
+  </div>
+
+  <!-- ══════════ TAB: TECH STACK ══════════ -->
+  <div class="tab-view" id="tab-techstack">
+  <div class="tech-grid">
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#00F5FF"></span>Next.js 14</div><div class="tech-use">App Router · RSC · API routes</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#7B2FFF"></span>Framer Motion</div><div class="tech-use">Page transitions · scroll anim · stagger</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#00F5FF"></span>React Three Fiber</div><div class="tech-use">3D car viewer · WebGL canvas</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#FFB800"></span>Three.js + Drei</div><div class="tech-use">HDRI · OrbitControls · GLB loader</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#7B2FFF"></span>21st.dev</div><div class="tech-use">Spotlight cards · InfiniteMarquee · UI</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#00F5FF"></span>tsparticles</div><div class="tech-use">Hero particle nebula background</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#FFB800"></span>react-tilt</div><div class="tech-use">3D perspective tilt on team cards</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#00F5FF"></span>Tailwind CSS v4</div><div class="tech-use">Utility styling · dark mode</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#FFB800"></span>Resend / Nodemailer</div><div class="tech-use">Booking email notifications</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#7B2FFF"></span>react-day-picker</div><div class="tech-use">Booking calendar component</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#00F5FF"></span>Orbitron + Rajdhani</div><div class="tech-use">Display + body sci-fi typefaces</div></div>
+    <div class="tech-card"><div class="tech-name"><span class="tech-dot" style="background:#FFB800"></span>yet-another-react-lightbox</div><div class="tech-use">Gallery fullscreen lightbox</div></div>
+  </div>
+  </div>
+
+  <!-- ══════════ TAB: ANIMATION MAP ══════════ -->
+  <div class="tab-view" id="tab-animation">
+  <div class="section-grid">
+    <div style="background:var(--panel);border:1px solid rgba(0,245,255,0.12);border-radius:4px;padding:14px;">
+      <div class="detail-label" style="margin-bottom:10px;">Page Load Sequence (orchestrated)</div>
+      <div class="chip-row">
+        <span class="chip h">0ms: Particle field initializes</span>
+        <span class="chip h">200ms: Navbar fade-down</span>
+        <span class="chip p">400ms: Hero eyebrow typewriter</span>
+        <span class="chip p">700ms: H1 word stagger up</span>
+        <span class="chip p">1100ms: Sub-headline + CTA fade</span>
+        <span class="chip g">1400ms: Scanline sweep fires</span>
+      </div>
+    </div>
+    <div style="background:var(--panel);border:1px solid rgba(123,47,255,0.2);border-radius:4px;padding:14px;">
+      <div class="detail-label" style="color:#A78BFA;margin-bottom:10px;">Scroll-Triggered (Framer viewport)</div>
+      <div class="chip-row">
+        <span class="chip p">Services: staggerChildren 0.1s delay each</span>
+        <span class="chip p">Stats: count-up number on enter</span>
+        <span class="chip p">Team cards: rotateY flip reveal</span>
+        <span class="chip p">Gallery: scale from 0.9 + fade</span>
+        <span class="chip p">Rating bars: width spring 0 → actual%</span>
+        <span class="chip p">About timeline: draw line + dot appear</span>
+      </div>
+    </div>
+    <div style="background:var(--panel);border:1px solid rgba(255,184,0,0.15);border-radius:4px;padding:14px;">
+      <div class="detail-label" style="color:var(--gold);margin-bottom:10px;">Interaction Micro-animations</div>
+      <div class="chip-row">
+        <span class="chip g">CTA: magnetic cursor follow (mousemove)</span>
+        <span class="chip g">Service cards: holo border slide from bottom</span>
+        <span class="chip g">Team cards: 3D perspective tilt</span>
+        <span class="chip g">Star rating: spring bounce on click</span>
+        <span class="chip g">Nav links: holo underline expand</span>
+        <span class="chip g">3D car: smooth model swap crossfade</span>
+      </div>
+    </div>
+    <div style="background:var(--panel);border:1px solid rgba(0,245,255,0.1);border-radius:4px;padding:14px;">
+      <div class="detail-label" style="margin-bottom:10px;">Ambient / Continuous</div>
+      <div class="chip-row">
+        <span class="chip h">Particle nebula (always)</span>
+        <span class="chip h">Grid overlay pulse (8s loop)</span>
+        <span class="chip h">Logo ring glow (3s loop)</span>
+        <span class="chip h">360° rotation ring in car viewer</span>
+        <span class="chip h">Testimonial marquee (infinite)</span>
+        <span class="chip h">Hero scanline sweep (3s loop)</span>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(el){
+  const was=el.classList.contains('open');
+  document.querySelectorAll('.sec-card').forEach(c=>c.classList.remove('open'));
+  if(!was)el.classList.add('open');
+}
+function showTab(id){
+  document.querySelectorAll('.tab-view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

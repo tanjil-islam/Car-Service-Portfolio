@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Obsidian & Acid Green Premium Theme */
+  --color-void: #050505;      /* Obsidian Black */
+  --color-panel: rgba(18, 18, 18, 0.6); /* Glass Graphite */
+  --color-text: #FAFAFA;      /* Crisp White */
+  --color-muted: #A1A1AA;     /* Zinc 400 */
+  
+  --color-plasma: #D6FF00;    /* Acid Green */
+  --color-gold: #E4E4E7;      /* Zinc 200 */
+  --color-holo: #D6FF00;      /* Acid Green (kept for legacy classes) */
+  
+  --color-steel: #09090b;     /* Deep Zinc */
+  --color-grid: rgba(255, 255, 255, 0.03); /* Barely visible grid */
+
+  --font-bebas: var(--font-bebas), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+  --font-mono: var(--font-mono), monospace;
+  
+  --font-display: var(--font-bebas), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+::selection {
+  background-color: #D6FF00;
+  color: #050505;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #050505;
+  color: #FAFAFA;
+  font-family: var(--font-inter), sans-serif;
+  scroll-behavior: smooth;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(214, 255, 0, 0.5);
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D6FF00;
+}
+
+/* 3D transitions & Utility classes */
+.perspective-container {
+  perspective: 1200px;
+}
+
+/* Holographic Panel */
+.holo-panel {
+  background: rgba(10, 6, 26, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  box-shadow: 0 0 20px rgba(122, 0, 255, 0.1) inset;
+  border-radius: 8px;
+}
+
+.holo-panel-active {
+  border-color: rgba(0, 245, 255, 0.6);
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.2) inset, 0 0 15px rgba(0, 245, 255, 0.4);
+}
+
+/* Background Gradients */
+.bg-holo-gradient {
+  background: #00F5FF;
+}
+
+.text-holo-gradient {
+  color: #00F5FF;
+}
+
+/* Glow Borders & Shapes */
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+}
+.glow-magenta {
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+}
+.glow-violet {
+  box-shadow: 0 0 15px rgba(122, 0, 255, 0.5);
+}
+
+/* Film Grain Overlay */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
