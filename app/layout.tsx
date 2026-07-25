@@ -34,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`bg-void text-text antialiased ${fontInter.variable} ${fontBebas.variable} ${fontMono.variable} font-inter selection:bg-plasma selection:text-void`}>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning className={`bg-void text-text antialiased ${fontInter.variable} ${fontBebas.variable} ${fontMono.variable} font-inter selection:bg-plasma selection:text-void`}>
         {/* Global Film Grain Noise */}
         <div className="film-grain" />
         {children}

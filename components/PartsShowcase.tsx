@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useScroll, useTransform, motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function PartsShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -11,79 +11,117 @@ export default function PartsShowcase() {
     offset: ["start start", "end end"],
   });
 
+  // Interactive 3D Mouse Tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springConfig = { damping: 25, stiffness: 120 };
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
-    <section ref={containerRef} id="parts" className="relative h-[400vh] bg-void max-w-[1920px] mx-auto">
+    <section ref={containerRef} id="parts" className="relative h-[300vh] bg-void max-w-[1920px] mx-auto">
       
-      {/* RIGHT COLUMN: STICKY CANVAS (Bulletproof Layout) */}
-      <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-none z-10">
-        <div className="sticky top-0 w-full h-screen flex items-center justify-center p-4 perspective-container pointer-events-auto">
+      {/* RIGHT COLUMN: STICKY CANVAS */}
+      <div 
+        className="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-auto z-10"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="sticky top-0 w-full h-screen flex items-center justify-center p-4 lg:p-8 perspective-container">
           <div 
-            className="w-full h-full max-h-[90vh] relative bg-panel/30 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm shadow-[0_0_50px_rgba(214,255,0,0.03)]"
+            className="w-full h-full max-h-[85vh] relative bg-panel/20 border border-white/10 rounded-[40px] overflow-hidden backdrop-blur-md shadow-[0_0_80px_rgba(214,255,0,0.05)]"
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Image 1: Precision Chassis */}
             <motion.div 
-              className="absolute inset-0 w-full h-full pointer-events-none"
+              className="absolute inset-0 w-full h-full pointer-events-none origin-center"
               style={{ 
                 opacity: useTransform(scrollYProgress, [0, 0.25, 0.35], [1, 1, 0]),
-                rotateX: useTransform(scrollYProgress, [0, 0.33], [15, -15]),
-                rotateY: useTransform(scrollYProgress, [0, 0.33], [-15, 15]),
-                scale: useTransform(scrollYProgress, [0, 0.33], [1, 1.15])
+                rotateX,
+                rotateY,
+                scale: useTransform(scrollYProgress, [0, 0.35], [1, 1.1])
               }}
             >
-              <img src="/images/precision_chassis_3d.png" alt="Precision Chassis" className="w-full h-full object-cover filter contrast-[1.1]" />
-              <div className="absolute inset-0 bg-void/20" />
+              <motion.img 
+                src="/images/chassis_new.png" 
+                alt="Precision Chassis" 
+                className="w-full h-full object-cover filter contrast-[1.2] brightness-[0.9]"
+                animate={{ scale: [1, 1.05, 1], x: ["-1%", "1%", "-1%"], y: ["1%", "-1%", "1%"] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-void/30" />
             </motion.div>
 
             {/* Image 2: V12 Engine */}
             <motion.div 
-              className="absolute inset-0 w-full h-full pointer-events-none"
+              className="absolute inset-0 w-full h-full pointer-events-none origin-center"
               style={{ 
-                opacity: useTransform(scrollYProgress, [0.25, 0.35, 0.55, 0.65], [0, 1, 1, 0]),
-                rotateX: useTransform(scrollYProgress, [0.33, 0.66], [15, -15]),
-                rotateY: useTransform(scrollYProgress, [0.33, 0.66], [-15, 15]),
-                scale: useTransform(scrollYProgress, [0.33, 0.66], [1, 1.15])
+                opacity: useTransform(scrollYProgress, [0.25, 0.35, 0.6, 0.7], [0, 1, 1, 0]),
+                rotateX,
+                rotateY,
+                scale: useTransform(scrollYProgress, [0.25, 0.35, 0.6, 0.7], [0.95, 1, 1, 1.1])
               }}
             >
-              <img src="/images/v12_engine_3d.png" alt="V12 Engine" className="w-full h-full object-cover filter contrast-[1.1]" />
-              <div className="absolute inset-0 bg-void/20" />
+              <motion.img 
+                src="/images/engine_new.png" 
+                alt="V12 Engine" 
+                className="w-full h-full object-cover filter contrast-[1.2] brightness-[0.9]"
+                animate={{ scale: [1.02, 1.07, 1.02], x: ["1%", "-1%", "1%"], y: ["-1%", "1%", "-1%"] }}
+                transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-void/30" />
             </motion.div>
 
             {/* Image 3: Carbon Aero */}
             <motion.div 
-              className="absolute inset-0 w-full h-full pointer-events-none"
+              className="absolute inset-0 w-full h-full pointer-events-none origin-center"
               style={{ 
-                opacity: useTransform(scrollYProgress, [0.55, 0.65, 1], [0, 1, 1]),
-                rotateX: useTransform(scrollYProgress, [0.66, 1], [15, -15]),
-                rotateY: useTransform(scrollYProgress, [0.66, 1], [-15, 15]),
-                scale: useTransform(scrollYProgress, [0.66, 1], [1, 1.15])
+                opacity: useTransform(scrollYProgress, [0.6, 0.7, 1], [0, 1, 1]),
+                rotateX,
+                rotateY,
+                scale: useTransform(scrollYProgress, [0.6, 0.7, 1], [0.95, 1, 1])
               }}
             >
-              <img src="/images/carbon_aero_3d.png" alt="Carbon Aero Kit" className="w-full h-full object-cover filter contrast-[1.1]" />
-              <div className="absolute inset-0 bg-void/20" />
+              <motion.img 
+                src="/images/aero_new.png" 
+                alt="Carbon Aero Kit" 
+                className="w-full h-full object-cover filter contrast-[1.2] brightness-[0.9]"
+                animate={{ scale: [1, 1.05, 1], x: ["-1%", "1%", "-1%"], y: ["-1%", "1%", "-1%"] }}
+                transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-void/30" />
             </motion.div>
-            
+
             {/* Overlay UI elements on the canvas */}
-            <div className="absolute bottom-6 right-8 text-right mix-blend-difference z-20">
-              <span className="font-mono text-[10px] tracking-widest text-muted uppercase block">
-                RENDER ENGINE // ACTIVE
+            <div className="absolute bottom-6 right-8 text-right z-30">
+              <span className="font-mono text-[10px] tracking-widest text-plasma uppercase block opacity-80">
+                SYSTEM CALIBRATION
               </span>
               <motion.span 
-                className="font-bebas text-3xl text-plasma tracking-widest"
-                style={{ opacity: useTransform(scrollYProgress, [0, 1], [0.3, 1]) }}
+                className="font-bebas text-3xl text-white tracking-widest"
               >
                 100% OPTIMIZED
               </motion.span>
             </div>
             
-            <div className="absolute top-6 left-8 mix-blend-difference z-20">
-              <span className="font-mono text-[10px] tracking-widest text-muted uppercase flex items-center gap-2">
-                // TELEMETRY
-                <motion.div 
-                  className="w-1.5 h-1.5 bg-plasma rounded-full"
-                  animate={{ opacity: [1, 0.2, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                />
+            <div className="absolute top-6 left-8 z-30">
+              <span className="font-mono text-[10px] tracking-widest text-plasma uppercase flex items-center gap-3 opacity-80">
+                // TELEMETRY ACTIVE
+                <div className="w-2 h-2 bg-plasma rounded-full shadow-[0_0_8px_rgba(214,255,0,0.8)]" />
               </span>
             </div>
           </div>
@@ -148,14 +186,12 @@ export default function PartsShowcase() {
                 <span className="text-muted">AERO KIT</span>
               </h2>
               <p className="font-mono text-sm tracking-wide text-muted max-w-md leading-relaxed border-l border-plasma/30 pl-6">
-                Downforce is nothing without balance. We utilize computational fluid dynamics to sculpt dry carbon fiber panels that stick the car to the tarmac at 300+ km/h.
+                Wind-tunnel tested carbon fiber composites that deliver massive downforce without compromising drag coefficient. Every splitter and wing is bespoke.
               </p>
             </motion.div>
           </div>
 
-          {/* Empty spacer so scroll continues past the last text block smoothly */}
-          <div className="h-screen" />
-        </div>
+      </div>
     </section>
   );
 }

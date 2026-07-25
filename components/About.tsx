@@ -8,7 +8,7 @@ export default function About() {
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
-  });
+  }); 
 
   return (
     <section id="about" className="py-32 px-6 md:px-16 lg:px-24 bg-void relative">

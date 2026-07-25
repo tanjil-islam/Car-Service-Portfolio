@@ -86,6 +86,7 @@ export default function Contact() {
                       <input
                         type="text"
                         required
+                        suppressHydrationWarning
                         value={contactName}
                         onChange={(e) => setContactName(e.target.value)}
                         placeholder="ENTER NAME"
@@ -100,6 +101,7 @@ export default function Contact() {
                       <input
                         type="email"
                         required
+                        suppressHydrationWarning
                         value={contactEmail}
                         onChange={(e) => setContactEmail(e.target.value)}
                         placeholder="ENTER EMAIL"
@@ -115,6 +117,7 @@ export default function Contact() {
                     <textarea
                       required
                       rows={5}
+                      suppressHydrationWarning
                       value={contactMessage}
                       onChange={(e) => setContactMessage(e.target.value)}
                       placeholder="HOW CAN WE ASSIST WITH YOUR BUILD?"
