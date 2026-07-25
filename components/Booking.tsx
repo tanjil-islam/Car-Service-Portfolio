@@ -150,7 +150,7 @@ export default function Booking() {
 
     setLoading(true);
 
-    const manifestId = `CMS-${Math.floor(100000 + Math.random() * 900000)}`;
+    const manifestId = `APT-${Math.floor(100000 + Math.random() * 900000)}`;
     const selectedServiceData = SERVICES.find((s) => s.id === selectedService);
 
     const payload = {
@@ -178,7 +178,7 @@ export default function Booking() {
       },
     };
 
-    console.log("[COMMISSION SERVICE] Payload Submitting:", payload);
+    console.log("[BOOKING SERVICE] Payload Submitting:", payload);
 
     try {
       const response = await fetch("/api/commission", {
@@ -187,18 +187,18 @@ export default function Booking() {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      console.log("[COMMISSION SERVICE] API Response:", data);
+      console.log("[BOOKING SERVICE] API Response:", data);
 
       if (data?.previewUrl) {
         setPreviewEmailUrl(data.previewUrl);
       }
     } catch (err) {
-      console.error("[COMMISSION SERVICE] API fetch error:", err);
+      console.error("[BOOKING SERVICE] API fetch error:", err);
     } finally {
       setLoading(false);
       setSubmittedManifestId(manifestId);
       setSuccess(true);
-      showToast(`COMMISSION DISPATCHED TO TANJIRUL4899@GMAIL.COM (${manifestId})`);
+      showToast(`APPOINTMENT CONFIRMED & SENT TO ${clientEmail.toUpperCase()} (${manifestId})`);
     }
   };
 
@@ -272,7 +272,7 @@ export default function Booking() {
             />
           </div>
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             {!success ? (
               <motion.div
                 key={`step-${currentStep}`}
