@@ -258,7 +258,7 @@ export default function Booking() {
             // CLIENT CONCIERGE
           </span>
           <h2 className="font-bebas text-6xl md:text-8xl tracking-wider text-text uppercase leading-none">
-            COMMISSION <span className="text-muted">SERVICE</span>
+            BOOK <span className="text-muted">APPOINTMENT</span>
           </h2>
         </div>
 
@@ -547,7 +547,7 @@ export default function Booking() {
                       </div>
 
                       <span className="text-plasma tracking-widest block mb-6 uppercase font-bold flex items-center gap-2">
-                        // COMMISSION SPECIFICATION
+                        // APPOINTMENT SPECIFICATION
                       </span>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-muted tracking-widest">
@@ -695,7 +695,7 @@ export default function Booking() {
                           TRANSMITTING...
                         </span>
                       ) : (
-                        "SUBMIT COMMISSION"
+                        "SUBMIT APPOINTMENT"
                       )}
                     </button>
                   )}
@@ -719,7 +719,7 @@ export default function Booking() {
                 </div>
 
                 <h3 className="font-bebas text-5xl md:text-6xl tracking-widest text-text uppercase mb-4">
-                  COMMISSION <span className="text-plasma">SECURED</span>
+                  APPOINTMENT <span className="text-plasma">SECURED</span>
                 </h3>
 
                 <p className="text-xs md:text-sm font-mono text-muted max-w-lg leading-relaxed uppercase mb-8 tracking-widest">
