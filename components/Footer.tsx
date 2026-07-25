@@ -8,7 +8,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-void border-t border-white/5 pt-20 pb-10 px-6 md:px-16 lg:px-24">
+    <footer className="bg-void pt-20 pb-10 px-6 md:px-16 lg:px-24">
       <div className="max-w-[1920px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start gap-16 mb-20 border-b border-white/10 pb-16">
           

@@ -234,7 +234,7 @@ export default function Booking() {
   return (
     <section
       id="booking"
-      className="py-32 px-6 md:px-16 lg:px-24 bg-void border-t border-white/5 relative"
+      className="py-32 px-6 md:px-16 lg:px-24 bg-void relative"
     >
       {/* Toast Notification */}
       <AnimatePresence>
@@ -755,22 +755,13 @@ export default function Booking() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
-                  {previewEmailUrl && (
-                    <a
-                      href={previewEmailUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-6 py-4 bg-plasma text-void font-mono text-xs tracking-widest uppercase font-bold transition-all duration-300 rounded-xl hover:scale-[1.02] shadow-[0_0_20px_rgba(214,255,0,0.3)] flex items-center gap-2"
-                    >
-                      <Mail size={16} /> VIEW SENT EMAIL PREVIEW
-                    </a>
-                  )}
                   <button
                     type="button"
+                    suppressHydrationWarning
                     onClick={resetForm}
-                    className="px-8 py-4 border border-plasma text-plasma hover:bg-plasma hover:text-void font-mono text-xs tracking-widest uppercase font-bold transition-all duration-300 rounded-xl cursor-pointer shadow-[0_0_15px_rgba(214,255,0,0.15)]"
+                    className="px-8 py-4 bg-plasma text-void font-mono text-xs tracking-widest uppercase font-black transition-all duration-300 rounded-xl cursor-pointer shadow-[0_0_20px_rgba(214,255,0,0.3)] hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    START NEW COMMISSION
+                    START NEW APPOINTMENT
                   </button>
                 </div>
               </motion.div>

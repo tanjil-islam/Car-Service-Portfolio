@@ -34,7 +34,7 @@ export default function Owner() {
   }, [isCounterInView]);
 
   return (
-    <section id="owner" className="py-32 px-6 md:px-16 lg:px-24 bg-void border-t border-white/5 relative overflow-hidden">
+    <section id="owner" className="py-32 px-6 md:px-16 lg:px-24 bg-void relative overflow-hidden">
       <div className="max-w-[1920px] mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           

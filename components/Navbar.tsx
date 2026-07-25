@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
-import { Phone } from "lucide-react";
+import { Phone, Clock, Calendar } from "lucide-react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [timeString, setTimeString] = useState<string>("");
+  const [dateString, setDateString] = useState<string>("");
   const { scrollY } = useScroll();
 
   useEffect(() => {
@@ -14,6 +16,34 @@ export default function Navbar() {
       setIsScrolled(latest > 50);
     });
   }, [scrollY]);
+
+  useEffect(() => {
+    const updateClock = () => {
+      const now = new Date();
+      setTimeString(
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        })
+      );
+      setDateString(
+        now
+          .toLocaleDateString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+          })
+          .toUpperCase()
+      );
+    };
+
+    updateClock();
+    const timer = setInterval(updateClock, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const navLinks = [
     { href: "#hero", label: "HOME" },
@@ -26,10 +56,10 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out px-6 md:px-16 lg:px-24 border-b ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out px-6 md:px-16 lg:px-24 ${
           isScrolled
-            ? "bg-void/90 backdrop-blur-2xl border-plasma/30 shadow-[0_10px_40px_rgba(0,0,0,0.9)] py-3 md:py-4"
-            : "bg-void/70 backdrop-blur-xl border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-4 md:py-6"
+            ? "bg-void/90 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.9)] py-3 md:py-4"
+            : "bg-void/70 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-4 md:py-6"
         }`}
       >
         <div className="w-full max-w-[1920px] mx-auto flex justify-between items-center">
@@ -60,8 +90,22 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* SYSTEM BADGE / DIRECT CALL & CTA */}
+          {/* SYSTEM BADGE / LIVE CLOCK / DIRECT CALL & CTA */}
           <div className="flex items-center gap-4 md:gap-6">
+            {/* LIVE HUD DATE & TIME WIDGET */}
+            <div className="hidden xl:flex items-center gap-3 px-4 py-2 bg-void/80 border border-white/10 rounded-full font-mono text-xs backdrop-blur-md shadow-inner">
+              <div className="flex items-center gap-1.5 text-plasma font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-plasma animate-ping" />
+                <Clock size={13} />
+                <span suppressHydrationWarning>{timeString || "12:00:00 AM"}</span>
+              </div>
+              <span className="text-white/20">|</span>
+              <div className="flex items-center gap-1.5 text-muted text-[10px] tracking-widest uppercase">
+                <Calendar size={12} className="text-plasma/70" />
+                <span suppressHydrationWarning>{dateString || "SYS // ONLINE"}</span>
+              </div>
+            </div>
+
             {/* Direct Phone Call Button */}
             <a
               href="tel:+8801956455165"
@@ -102,7 +146,23 @@ export default function Navbar() {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed inset-0 z-40 bg-void/95 backdrop-blur-2xl flex flex-col justify-center items-center px-6 lg:hidden border-l border-white/10"
           >
-            <div className="flex flex-col gap-6 text-center w-full max-w-sm">
+            <div className="flex flex-col gap-5 text-center w-full max-w-sm">
+              {/* Mobile Live Clock Display */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="py-3 px-4 bg-void border border-plasma/30 rounded-2xl font-mono flex items-center justify-between text-xs shadow-[0_0_15px_rgba(214,255,0,0.1)] mb-2"
+              >
+                <div className="flex items-center gap-2 text-plasma font-bold">
+                  <Clock size={14} className="text-plasma animate-pulse" />
+                  <span suppressHydrationWarning>{timeString || "12:00:00 AM"}</span>
+                </div>
+                <div className="flex items-center gap-1 text-[10px] text-muted tracking-widest uppercase">
+                  <Calendar size={12} className="text-plasma" />
+                  <span suppressHydrationWarning>{dateString || "ONLINE"}</span>
+                </div>
+              </motion.div>
+
               {navLinks.map((link, idx) => (
                 <motion.a
                   initial={{ opacity: 0, y: 20 }}
@@ -123,7 +183,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.1 + 0.05 }}
                 href="tel:+8801956455165"
-                className="mt-4 flex items-center justify-center gap-3 px-6 py-3 border border-plasma/40 text-plasma font-mono text-xs tracking-widest font-bold uppercase rounded-full bg-plasma/10"
+                className="mt-2 flex items-center justify-center gap-3 px-6 py-3 border border-plasma/40 text-plasma font-mono text-xs tracking-widest font-bold uppercase rounded-full bg-plasma/10"
               >
                 <Phone size={16} />
                 <span>+880 1956-455165</span>

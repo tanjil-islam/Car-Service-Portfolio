@@ -96,7 +96,7 @@ export default function WorkGallery() {
   return (
     <section
       id="work"
-      className="py-32 px-6 md:px-16 lg:px-24 bg-void border-t border-white/5 relative"
+      className="py-32 px-6 md:px-16 lg:px-24 bg-void relative"
     >
       <div className="max-w-[1920px] mx-auto">
         

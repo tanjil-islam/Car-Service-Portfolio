@@ -5,7 +5,7 @@ import { teamData } from "@/data/RoadmenData";
 
 export default function Team() {
   return (
-    <section id="team" className="py-32 px-6 md:px-16 lg:px-24 bg-void border-t border-white/5 relative">
+    <section id="team" className="py-32 px-6 md:px-16 lg:px-24 bg-void relative">
       <div className="max-w-[1920px] mx-auto">
         
         <div className="flex flex-col items-center text-center mb-20">

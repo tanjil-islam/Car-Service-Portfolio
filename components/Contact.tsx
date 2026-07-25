@@ -23,7 +23,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 px-6 md:px-16 lg:px-24 bg-void border-t border-white/5 relative">
+    <section id="contact" className="py-32 px-6 md:px-16 lg:px-24 bg-void relative">
       <div className="max-w-[1920px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-stretch">
           

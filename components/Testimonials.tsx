@@ -9,7 +9,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="py-32 bg-void border-t border-white/5 relative overflow-hidden"
+      className="py-32 bg-void relative overflow-hidden"
     >
       <div className="max-w-[1920px] mx-auto px-6 md:px-16 lg:px-24 mb-20 flex flex-col items-center text-center">
         <span className="font-mono text-xs tracking-[0.4em] text-plasma mb-6 uppercase block">

@@ -2,8 +2,41 @@
 
 import { motion } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
+      
+      const handleCanPlay = () => {
+        video.play().catch(() => {});
+      };
+
+      if (video.readyState >= 2) {
+        video.play().catch(() => {});
+      } else {
+        video.addEventListener("canplay", handleCanPlay);
+      }
+
+      // Fallback play trigger
+      const timer = setTimeout(() => {
+        video.play().catch(() => {});
+      }, 300);
+
+      return () => {
+        video.removeEventListener("canplay", handleCanPlay);
+        clearTimeout(timer);
+      };
+    }
+  }, []);
+
   const containerVariants = {
     hidden: {},
     visible: {
@@ -35,19 +68,20 @@ export default function Hero() {
       className="relative h-screen min-h-[800px] flex items-center justify-center bg-void overflow-hidden"
     >
       {/* BACKGROUND VIDEO */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full bg-void">
+        {/* FastStart 1080p Video - Direct SRC with Guaranteed Autoplay */}
         <video
+          ref={videoRef}
+          src="/videos/hero-bg.mp4"
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
+          poster="/images/hero-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 scale-105"
-        >
-          <source
-            src="/Pagani_Zonda_R_engine_exploded_202607140011.mp4"
-            type="video/mp4"
-          />
-        </video>
+        />
+
         {/* Deep vignette for premium contrast */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#050505_100%)] z-10 pointer-events-none" />
       </div>
