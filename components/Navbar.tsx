@@ -32,26 +32,28 @@ export default function Navbar() {
             : "bg-void/60 backdrop-blur-xl border-b border-white/5 py-4 md:py-6"
         }`}
       >
-        <div className="w-full max-w-[1920px] mx-auto flex justify-between items-center">
-          {/* LOGO BLOCK - Premium High-Visibility */}
-          <a href="#hero" className="flex items-center gap-3.5 group cursor-pointer">
-            <img 
-              src="/images/logo.png" 
-              alt="Roadmen Logo" 
-              className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-full border-2 border-plasma/60 shadow-[0_0_20px_rgba(214,255,0,0.25)] transition-transform duration-300 group-hover:scale-105" 
-            />
-            <div className="flex flex-col">
-              <span className="font-bebas text-3xl md:text-4xl tracking-widest text-text leading-none uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] transition-colors group-hover:text-plasma">
-                ROADMEN
-              </span>
-              <span className="text-[9px] md:text-[10px] font-mono tracking-[0.35em] text-plasma font-bold mt-0.5 uppercase">
-                PERFORMANCE // ENGINEERING
-              </span>
-            </div>
-          </a>
+        <div className="w-full max-w-[1920px] mx-auto grid grid-cols-2 lg:grid-cols-3 items-center">
+          {/* LOGO BLOCK - Left Aligned */}
+          <div className="flex items-center justify-start">
+            <a href="#hero" className="flex items-center gap-3.5 group cursor-pointer">
+              <img 
+                src="/images/logo.png" 
+                alt="Roadmen Logo" 
+                className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-full border-2 border-plasma/60 shadow-[0_0_20px_rgba(214,255,0,0.25)] transition-transform duration-300 group-hover:scale-105" 
+              />
+              <div className="flex flex-col">
+                <span className="font-bebas text-3xl md:text-4xl tracking-widest text-text leading-none uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] transition-colors group-hover:text-plasma">
+                  ROADMEN
+                </span>
+                <span className="text-[9px] md:text-[10px] font-mono tracking-[0.35em] text-plasma font-bold mt-0.5 uppercase">
+                  PERFORMANCE // ENGINEERING
+                </span>
+              </div>
+            </a>
+          </div>
 
-          {/* DESKTOP NAVIGATION LINKS - Clean Visual Alignment */}
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-12">
+          {/* DESKTOP NAVIGATION LINKS - Mathematically Centered Horizontally */}
+          <nav className="hidden lg:flex items-center justify-center gap-8 xl:gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -64,8 +66,8 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* DIRECT CALL & CTA BUTTONS */}
-          <div className="flex items-center gap-3 md:gap-5">
+          {/* DIRECT CALL & CTA BUTTONS - Right Aligned */}
+          <div className="flex items-center justify-end gap-3 md:gap-5">
             {/* Phone Button */}
             <a
               href="tel:+8801956455165"
