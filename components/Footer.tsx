@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -8,14 +9,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-void pt-20 pb-10 px-6 md:px-16 lg:px-24">
+    <footer className="bg-void pt-10 md:pt-20 pb-10 px-4 sm:px-6 md:px-16 lg:px-24">
       <div className="max-w-[1920px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-16 mb-20 border-b border-white/10 pb-16">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-8 md:gap-16 mb-10 md:mb-20 border-b border-white/10 pb-16">
           
           <div className="max-w-sm">
             <div className="flex items-center gap-6 mb-8">
-              <img src="/images/logo.png" alt="Roadmen Logo" className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full border border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)]" />
-              <h3 className="font-bebas text-6xl md:text-7xl tracking-widest text-text uppercase m-0 leading-none">
+              <Image src="/images/logo.png" alt="Roadmen Logo" width={112} height={112} className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full border border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)]" />
+              <h3 className="font-bebas text-4xl md:text-6xl tracking-widest text-text uppercase m-0 leading-none">
                 ROADMEN
               </h3>
             </div>
@@ -23,7 +24,7 @@ export default function Footer() {
               Precision automotive engineering. We build, calibrate, and perfect high-performance vehicles for the track and the street.
             </p>
             
-            <div className="mt-8 flex flex-col gap-2 font-mono text-[10px] tracking-widest text-muted uppercase">
+            <div className="mt-8 flex flex-col gap-2 font-mono text-xs tracking-widest text-muted uppercase">
               <p>Lake city, Concord. Khilkhet</p>
               <p>Dhaka, Bangladesh, 1229</p>
               <p className="mt-2 text-plasma">+880 1956-455165</p>
@@ -31,7 +32,7 @@ export default function Footer() {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-12 font-mono text-xs tracking-widest uppercase">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 font-mono text-xs tracking-widest uppercase">
             <div className="flex flex-col gap-4">
               <span className="text-plasma mb-2">NAVIGATION</span>
               <a href="#hero" className="text-muted hover:text-text transition-colors">HOME</a>
@@ -57,7 +58,7 @@ export default function Footer() {
           
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center font-mono text-[10px] tracking-[0.3em] text-muted uppercase">
+        <div className="flex flex-col md:flex-row justify-between items-center font-mono text-xs tracking-[0.3em] text-muted uppercase">
           <p>© {new Date().getFullYear()} ROADMEN. ALL RIGHTS RESERVED.</p>
           <button 
             onClick={scrollToTop}

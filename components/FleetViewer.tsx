@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 interface FleetVehicle {
   id: string;
@@ -104,19 +105,19 @@ export default function FleetViewer() {
   return (
     <section
       id="fleet"
-      className="py-32 px-6 md:px-12 bg-void border-t border-plasma/10 relative overflow-hidden perspective-container"
+      className="py-16 md:py-32 px-6 md:px-12 bg-void border-t border-plasma/10 relative overflow-hidden perspective-container"
     >
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Title */}
-        <div className="flex flex-col mb-16">
-          <span className="font-mono text-[10px] tracking-[0.35em] text-plasma mb-2 uppercase drop-shadow-[0_0_8px_rgba(0,245,255,0.8)]">
+        <div className="flex flex-col mb-8 md:mb-16">
+          <span className="font-mono text-xs tracking-[0.35em] text-plasma mb-2 uppercase drop-glow-cyan">
             // SPECIFICATION SCHEMA
           </span>
           <h2 className="font-bebas text-4xl md:text-6xl tracking-wide text-text uppercase">
             360° <span className="text-holo-gradient glow-cyan">HOLOGRAPHIC</span> VIEWER
           </h2>
-          <div className="h-[2px] w-24 bg-holo-gradient mt-4 rounded-full glow-cyan" />
+          <div className="h-0.5 w-24 bg-holo-gradient mt-4 rounded-full glow-cyan" />
         </div>
 
         {/* Tab Selection */}
@@ -125,7 +126,7 @@ export default function FleetViewer() {
             <button
               key={vehicle.id}
               onClick={() => setSelectedVehicle(vehicle)}
-              className={`font-mono text-[11px] tracking-widest uppercase px-6 py-3 border rounded-md transition-all duration-300 cursor-pointer ${
+              className={`font-mono text-xs tracking-widest uppercase px-6 py-3 border rounded-md transition-all duration-300 cursor-pointer ${
                 selectedVehicle.id === vehicle.id
                   ? "border-plasma text-void bg-plasma glow-cyan font-bold"
                   : "border-muted/30 text-muted hover:border-plasma/50 hover:text-plasma hover:bg-plasma/5"
@@ -137,13 +138,13 @@ export default function FleetViewer() {
         </div>
 
         {/* Main Interface Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 items-stretch">
           
           {/* Left panel: Specs sheet (looks like dealer spec sheet) */}
           <div className="lg:col-span-4 flex flex-col gap-6 justify-between">
             <div className="holo-panel p-6 border-t-2 border-t-plasma rounded-xl flex-1 flex flex-col justify-between">
               <div>
-                <span className="text-[10px] font-mono tracking-widest text-plasma block mb-1">
+                <span className="text-xs font-mono tracking-widest text-plasma block mb-1">
                   MODEL OVERVIEW // {selectedVehicle.subName}
                 </span>
                 <h3 className="font-bebas text-4xl tracking-wide text-text uppercase mb-6 drop-shadow-lg">
@@ -151,7 +152,7 @@ export default function FleetViewer() {
                 </h3>
                 
                 {/* Stats spec table */}
-                <div className="flex flex-col gap-4 font-mono text-[12px] text-muted">
+                <div className="flex flex-col gap-4 font-mono text-xs text-muted">
                   {[
                     { label: "ENGINE POWER OUTPUT", value: selectedVehicle.power },
                     { label: "PEAK TORQUE RATIO", value: selectedVehicle.torque },
@@ -163,13 +164,13 @@ export default function FleetViewer() {
                       className="flex justify-between items-center border-b border-plasma/20 pb-2"
                     >
                       <span className="tracking-wider text-muted uppercase">{stat.label}</span>
-                      <span className="text-plasma font-bold drop-shadow-[0_0_5px_rgba(0,245,255,0.5)]">{stat.value}</span>
+                      <span className="text-plasma font-bold drop-glow-cyan">{stat.value}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="mt-8 text-[10px] font-mono text-muted/70 leading-relaxed tracking-wider border-t border-plasma/20 pt-4 uppercase">
+              <div className="mt-8 text-xs font-mono text-muted/70 leading-relaxed tracking-wider border-t border-plasma/20 pt-4 uppercase">
                 * ROTATE VIEWPORT PORT TO EXAMINE CHASSIS AERO SHEEN.
               </div>
             </div>
@@ -178,11 +179,11 @@ export default function FleetViewer() {
             <div className="flex items-center gap-4 justify-between holo-panel px-6 py-4 rounded-xl">
               <button
                 onClick={() => setIsPlaying((p) => !p)}
-                className="px-6 py-3 border border-plasma/30 text-plasma text-[11px] font-mono tracking-widest uppercase hover:bg-plasma/10 transition-colors duration-200 rounded-md cursor-pointer glow-cyan"
+                className="px-6 py-3 border border-plasma/30 text-plasma text-xs font-mono tracking-widest uppercase hover:bg-plasma/10 transition-colors duration-200 rounded-md cursor-pointer glow-cyan"
               >
                 {isPlaying ? "PAUSE ROTATION" : "PLAY AUTO ROTATION"}
               </button>
-              <div className="text-right text-[11px] font-mono tracking-widest text-muted">
+              <div className="text-right text-xs font-mono tracking-widest text-muted">
                 FRAME: <span className="text-plasma font-bold">{currentFrame} / {totalFrames}</span>
               </div>
             </div>
@@ -207,17 +208,17 @@ export default function FleetViewer() {
               <img
                 src={`/images/zonda-sequence/${currentFrame}.jpg`}
                 alt="Rotating Vehicle"
-                className="max-h-[90%] max-w-[90%] object-contain select-none pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300 z-0 drop-shadow-[0_0_15px_rgba(0,245,255,0.4)]"
+                className="max-h-[90%] max-w-11/12 object-contain select-none pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300 z-0 drop-glow-cyan"
               />
 
               {/* Technical degree data indicator */}
               <div className="absolute bottom-6 right-6 text-right z-20 font-mono">
-                <span className="text-[10px] tracking-widest text-plasma block mb-1">CHASSIS DEGREE WHEEL</span>
+                <span className="text-xs tracking-widest text-plasma block mb-1">CHASSIS DEGREE WHEEL</span>
                 <span className="text-2xl font-bold text-text drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">{rotationDegrees}°</span>
               </div>
 
               {/* Grid scanning brackets */}
-              <div className="absolute top-6 left-6 text-[10px] font-mono text-plasma tracking-wider z-20">
+              <div className="absolute top-6 left-6 text-xs font-mono text-plasma tracking-wider z-20">
                 FRAME_INDEX // {currentFrame}
               </div>
             </div>

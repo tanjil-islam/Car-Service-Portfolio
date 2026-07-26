@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       client,
     } = payload;
 
-    console.log(`[COMMISSION SERVICE API] Processing booking ${commissionId} for recipient: ${ADMIN_EMAIL}`);
+    // Processing booking
 
     const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
     const smtpPort = Number(process.env.SMTP_PORT) || 587;
@@ -123,7 +123,7 @@ export async function POST(request: Request) {
             html: clientHtml,
           });
           clientEmailSent = true;
-          console.log(`[CLIENT EMAIL SUCCESS] Dispatched confirmation receipt to ${client.email}`);
+          // Dispatched confirmation receipt
         } catch (clientErr) {
           console.error(`[CLIENT EMAIL ERROR] Failed to send receipt to ${client.email}:`, clientErr);
         }
@@ -131,10 +131,10 @@ export async function POST(request: Request) {
 
       emailSent = true;
       statusMessage = `Email dispatched to Admin (${ADMIN_EMAIL}) ${clientEmailSent ? `and Client (${client.email})` : ''}`;
-      console.log(`[EMAIL SUCCESS] Dispatched to ${ADMIN_EMAIL}`);
+      // Email dispatched successfully
     } else {
       // Fallback: Generate Ethereal Test Account and return instant preview URL
-      console.log("[EMAIL NOTICE] SMTP_USER/SMTP_PASS not set in .env.local. Creating Ethereal preview email...");
+      // SMTP not set, using Ethereal
       const testAccount = await nodemailer.createTestAccount();
       const transporter = nodemailer.createTransport({
         host: testAccount.smtp.host,
@@ -157,7 +157,7 @@ export async function POST(request: Request) {
       previewUrl = nodemailer.getTestMessageUrl(info) || "";
       emailSent = true;
       statusMessage = `Test email generated. Preview link: ${previewUrl}`;
-      console.log(`[ETHEREAL EMAIL PREVIEW] ${previewUrl}`);
+      // Ethereal URL preview
     }
 
     return NextResponse.json({

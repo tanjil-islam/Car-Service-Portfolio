@@ -26,6 +26,21 @@ const fontMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "ROADMEN | Precision Automotive Engineering",
   description: "We build, calibrate, and perfect high-performance vehicles for the track and the street.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "ROADMEN | Precision Automotive Engineering",
+    description: "We build, calibrate, and perfect high-performance vehicles for the track and the street.",
+    type: "website",
+    locale: "en_US",
+    siteName: "ROADMEN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ROADMEN | Precision Automotive Engineering",
+    description: "We build, calibrate, and perfect high-performance vehicles for the track and the street.",
+  },
 };
 
 export default function RootLayout({

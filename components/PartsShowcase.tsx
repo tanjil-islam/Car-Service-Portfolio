@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { useScroll, useTransform, motion, useMotionValue, useSpring } from "framer-motion";
+import Image from "next/image";
+import { useScroll, useTransform, motion } from "framer-motion";
 
 export default function PartsShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -11,26 +12,6 @@ export default function PartsShowcase() {
     offset: ["start start", "end end"],
   });
 
-  // Interactive 3D Mouse Tracking
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springConfig = { damping: 30, stiffness: 100 };
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
 
   // Image Opacities (Synchronized, GPU Smooth)
   const img1Opacity = useTransform(scrollYProgress, [0, 0.28, 0.36], [1, 1, 0]);
@@ -48,25 +29,18 @@ export default function PartsShowcase() {
   const text3Opacity = useTransform(scrollYProgress, [0.62, 0.7, 1], [0.2, 1, 1]);
 
   return (
-    <section ref={containerRef} id="parts" className="relative h-[300vh] bg-void max-w-[1920px] mx-auto">
+    <section ref={containerRef} id="parts" className="relative h-[150vh] md:h-300vh bg-void max-w-[1920px] mx-auto">
       {/* RIGHT COLUMN: STICKY CANVAS */}
-      <div
-        className="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-auto z-10"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className="sticky top-0 w-full h-screen flex items-center justify-center p-4 lg:p-8">
+      <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-auto z-10">
+        <div className="sticky top-0 w-full h-[100dvh] md:h-screen flex items-center justify-center p-4 lg:p-5 md:p-8">
           <div
-            className="w-full h-full max-h-[85vh] relative bg-panel/40 border border-white/10 rounded-[40px] overflow-hidden shadow-[0_0_80px_rgba(214,255,0,0.05)] will-change-transform transform-gpu"
-            style={{ transformStyle: "preserve-3d" }}
+            className="w-full h-full max-h-85vh relative bg-panel/40 border border-white/10 rounded-[40px] overflow-hidden shadow-glow-plasma-sm will-change-transform transform-gpu preserve-3d"
           >
             {/* Image 1: Precision Chassis */}
             <motion.div
               className="absolute inset-0 w-full h-full pointer-events-none origin-center will-change-transform transform-gpu"
               style={{
                 opacity: img1Opacity,
-                rotateX,
-                rotateY,
                 scale: img1Scale,
               }}
             >
@@ -83,8 +57,6 @@ export default function PartsShowcase() {
               className="absolute inset-0 w-full h-full pointer-events-none origin-center will-change-transform transform-gpu"
               style={{
                 opacity: img2Opacity,
-                rotateX,
-                rotateY,
                 scale: img2Scale,
               }}
             >
@@ -101,8 +73,6 @@ export default function PartsShowcase() {
               className="absolute inset-0 w-full h-full pointer-events-none origin-center will-change-transform transform-gpu"
               style={{
                 opacity: img3Opacity,
-                rotateX,
-                rotateY,
                 scale: img3Scale,
               }}
             >
@@ -116,7 +86,7 @@ export default function PartsShowcase() {
 
             {/* Overlay UI elements on the canvas */}
             <div className="absolute bottom-6 right-8 text-right z-30">
-              <span className="font-mono text-[10px] tracking-widest text-plasma uppercase block opacity-80">
+              <span className="font-mono text-xs tracking-widest text-plasma uppercase block opacity-80">
                 SYSTEM CALIBRATION
               </span>
               <span className="font-bebas text-3xl text-white tracking-widest">
@@ -125,7 +95,7 @@ export default function PartsShowcase() {
             </div>
 
             <div className="absolute top-6 left-8 z-30">
-              <span className="font-mono text-[10px] tracking-widest text-plasma uppercase flex items-center gap-3 opacity-80">
+              <span className="font-mono text-xs tracking-widest text-plasma uppercase flex items-center gap-3 opacity-80">
                 // TELEMETRY ACTIVE
                 <div className="w-2 h-2 bg-plasma rounded-full shadow-[0_0_8px_rgba(214,255,0,0.8)] animate-pulse" />
               </span>
@@ -135,13 +105,13 @@ export default function PartsShowcase() {
       </div>
 
       {/* LEFT COLUMN: SCROLLING TYPOGRAPHY */}
-      <div className="w-full lg:w-1/2 relative z-20 flex flex-col px-6 md:px-16 lg:px-24">
-        <div className="h-screen flex flex-col justify-center items-start">
+      <div className="w-full lg:w-1/2 relative z-20 flex flex-col px-4 sm:px-6 md:px-16 lg:px-24">
+        <div className="h-[100dvh] md:h-screen flex flex-col justify-center items-start">
           <motion.div style={{ opacity: text1Opacity }} className="transition-opacity duration-300">
             <span className="font-mono text-xs tracking-[0.4em] text-plasma mb-4 block">
               // 01. THE FOUNDATION
             </span>
-            <h2 className="font-bebas text-6xl md:text-8xl text-text leading-[0.9] tracking-wider mb-6">
+            <h2 className="font-bebas text-4xl md:text-6xl text-text leading-[0.9] tracking-wider mb-6">
               PRECISION <br />
               <span className="text-muted">CHASSIS</span>
             </h2>
@@ -151,12 +121,12 @@ export default function PartsShowcase() {
           </motion.div>
         </div>
 
-        <div className="h-screen flex flex-col justify-center items-start">
+        <div className="h-[100dvh] md:h-screen flex flex-col justify-center items-start">
           <motion.div style={{ opacity: text2Opacity }} className="transition-opacity duration-300">
             <span className="font-mono text-xs tracking-[0.4em] text-plasma mb-4 block">
               // 02. HEART OF THE MACHINE
             </span>
-            <h2 className="font-bebas text-6xl md:text-8xl text-text leading-[0.9] tracking-wider mb-6">
+            <h2 className="font-bebas text-4xl md:text-6xl text-text leading-[0.9] tracking-wider mb-6">
               POWERTRAIN <br />
               <span className="text-muted">ASSEMBLY</span>
             </h2>
@@ -166,12 +136,12 @@ export default function PartsShowcase() {
           </motion.div>
         </div>
 
-        <div className="h-screen flex flex-col justify-center items-start">
+        <div className="h-[100dvh] md:h-screen flex flex-col justify-center items-start">
           <motion.div style={{ opacity: text3Opacity }} className="transition-opacity duration-300">
             <span className="font-mono text-xs tracking-[0.4em] text-plasma mb-4 block">
               // 03. AERODYNAMIC FLOW
             </span>
-            <h2 className="font-bebas text-6xl md:text-8xl text-text leading-[0.9] tracking-wider mb-6">
+            <h2 className="font-bebas text-4xl md:text-6xl text-text leading-[0.9] tracking-wider mb-6">
               CARBON <br />
               <span className="text-muted">AERO KIT</span>
             </h2>

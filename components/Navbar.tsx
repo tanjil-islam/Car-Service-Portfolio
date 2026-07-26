@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { Phone, ArrowUpRight } from "lucide-react";
 
@@ -36,16 +37,12 @@ export default function Navbar() {
           {/* LOGO BLOCK - Left Aligned */}
           <div className="flex items-center justify-start">
             <a href="#hero" className="flex items-center gap-3.5 group cursor-pointer">
-              <img 
-                src="/images/logo.png" 
-                alt="Roadmen Logo" 
-                className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-full border-2 border-plasma/60 shadow-[0_0_20px_rgba(214,255,0,0.25)] transition-transform duration-300 group-hover:scale-105" 
-              />
+              <Image src="/images/logo.png" alt="Roadmen Logo" width={48} height={48} className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-full border-2 border-plasma/60 shadow-glow-plasma-md transition-transform duration-300 group-hover:scale-105" />
               <div className="flex flex-col">
                 <span className="font-bebas text-3xl md:text-4xl tracking-widest text-text leading-none uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] transition-colors group-hover:text-plasma">
                   ROADMEN
                 </span>
-                <span className="text-[9px] md:text-[10px] font-mono tracking-[0.35em] text-plasma font-bold mt-0.5 uppercase">
+                <span className="text-xs md:text-xs font-mono tracking-[0.35em] text-plasma font-bold mt-0.5 uppercase">
                   PERFORMANCE // ENGINEERING
                 </span>
               </div>
@@ -53,7 +50,7 @@ export default function Navbar() {
           </div>
 
           {/* DESKTOP NAVIGATION LINKS - Mathematically Centered Horizontally */}
-          <nav className="hidden lg:flex items-center justify-center gap-8 xl:gap-12">
+          <nav className="hidden lg:flex items-center justify-center gap-4 md:gap-8 xl:gap-6 md:gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -61,7 +58,7 @@ export default function Navbar() {
                 className="relative text-xs font-mono tracking-[0.25em] font-semibold text-text/80 hover:text-plasma transition-colors duration-300 uppercase group py-2"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-plasma transition-all duration-300 ease-out group-hover:w-full shadow-[0_0_8px_#D6FF00]" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-plasma transition-all duration-300 ease-out group-hover:w-full shadow-[0_0_8px_#D6FF00]" />
               </a>
             ))}
           </nav>
@@ -71,7 +68,7 @@ export default function Navbar() {
             {/* Phone Button */}
             <a
               href="tel:+8801956455165"
-              className="hidden md:inline-flex items-center gap-2 px-4 py-2.5 border border-plasma/40 bg-plasma/10 text-plasma hover:bg-plasma hover:text-void font-mono text-[11px] tracking-widest font-bold uppercase transition-all duration-300 rounded-full shadow-[0_0_15px_rgba(214,255,0,0.15)] cursor-pointer"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2.5 border border-plasma/40 bg-plasma/10 text-plasma hover:bg-plasma hover:text-void font-mono text-xs tracking-widest font-bold uppercase transition-all duration-300 rounded-full shadow-glow-plasma-md cursor-pointer"
             >
               <Phone size={14} className="animate-pulse" />
               <span>+880 1956-455165</span>
@@ -80,7 +77,7 @@ export default function Navbar() {
             {/* Book Appointment CTA */}
             <a
               href="#booking"
-              className="hidden sm:inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-plasma text-void text-[11px] font-mono tracking-widest font-black uppercase transition-all duration-300 hover:bg-white hover:text-void rounded-full shadow-[0_0_25px_rgba(214,255,0,0.35)] hover:scale-105 cursor-pointer"
+              className="hidden sm:inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-plasma text-void text-xs font-mono tracking-widest font-black uppercase transition-all duration-300 hover:bg-white hover:text-void rounded-full shadow-glow-plasma-md hover:scale-105 cursor-pointer"
             >
               <span>BOOK APPOINTMENT</span>
               <ArrowUpRight size={14} />
@@ -144,7 +141,7 @@ export default function Navbar() {
                 transition={{ delay: navLinks.length * 0.08 + 0.15 }}
                 href="#booking"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-8 py-4 bg-plasma text-void font-mono text-sm tracking-[0.2em] font-black uppercase rounded-full shadow-[0_0_20px_rgba(214,255,0,0.3)]"
+                className="flex items-center justify-center gap-2 px-8 py-4 bg-plasma text-void font-mono text-sm tracking-[0.2em] font-black uppercase rounded-full shadow-glow-plasma-md"
               >
                 <span>BOOK APPOINTMENT</span>
                 <ArrowUpRight size={16} />

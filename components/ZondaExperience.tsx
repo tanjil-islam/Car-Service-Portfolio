@@ -27,16 +27,16 @@ export default function ZondaExperience({ scrollYProgress }: ZondaExperienceProp
   const activeContent = hudPhases[currentPhase];
 
   return (
-    <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-6 md:p-12 font-rajdhani">
+    <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-6 md:p-6 md:p-12 font-rajdhani">
       {/* 1. TOP CORNER HUD TELEMETRY */}
-      <div className="flex justify-between items-start w-full mt-16 md:mt-20">
-        <div className="hud-border hud-bg px-4 py-2 border-l-2 border-l-pagani-gold flex flex-col text-[10px] tracking-[0.2em] text-gray-400">
+      <div className="flex justify-between items-start w-full mt-8 md:mt-16 md:mt-10 md:mt-20">
+        <div className="hud-border hud-bg px-4 py-2 border-l-2 border-l-pagani-gold flex flex-col text-xs tracking-[0.2em] text-gray-400">
           <span>SYSTEM // OK</span>
           <span>LATENCY // 1.2MS</span>
           <span className="text-pagani-gold">SEQUENCE CONTROL // ACTIVE</span>
         </div>
 
-        <div className="hud-border hud-bg px-4 py-2 border-r-2 border-r-pagani-gold text-right text-[10px] tracking-[0.2em] text-gray-400">
+        <div className="hud-border hud-bg px-4 py-2 border-r-2 border-r-pagani-gold text-right text-xs tracking-[0.2em] text-gray-400">
           <span>FRAME // {Math.round(rawScroll * 300)} / 300</span>
           <br />
           <span>SPEED // <span className="text-white font-bold">{(rawScroll * 375).toFixed(0)}</span> KM/H</span>
@@ -46,8 +46,8 @@ export default function ZondaExperience({ scrollYProgress }: ZondaExperienceProp
       {/* 2. MAIN CENTER HUD TRANSITIONED CONTENT */}
       <div className="flex-1 flex items-center justify-center relative w-full my-4">
         {/* Dynamic decorative reticle */}
-        <div className="absolute w-[280px] h-[280px] md:w-[450px] md:h-[450px] border border-pagani-gold/10 rounded-full flex items-center justify-center">
-          <div className="w-[85%] h-[85%] border border-dashed border-pagani-gold/5 rounded-full" />
+        <div className="absolute w-280px h-280px md:w-450px md:h-450px border border-pagani-gold/10 rounded-full flex items-center justify-center">
+          <div className="w-5/6 h-5/6 border border-dashed border-pagani-gold/5 rounded-full" />
           <div className="absolute w-4 h-4 border-t border-l border-pagani-gold/30 top-0 left-0" />
           <div className="absolute w-4 h-4 border-t border-r border-pagani-gold/30 top-0 right-0" />
           <div className="absolute w-4 h-4 border-b border-l border-pagani-gold/30 bottom-0 left-0" />
@@ -67,7 +67,7 @@ export default function ZondaExperience({ scrollYProgress }: ZondaExperienceProp
               }`}
             >
               <div className={`flex flex-col ${currentPhase === 2 ? "md:items-end" : ""}`}>
-                <span className="text-[11px] font-orbitron tracking-[0.4em] text-pagani-gold font-bold mb-2">
+                <span className="text-xs font-orbitron tracking-[0.4em] text-pagani-gold font-bold mb-2">
                   // PHASE 0{currentPhase + 1} // {activeContent.subtitle}
                 </span>
                 <h1 className="font-orbitron text-4xl md:text-6xl font-black tracking-wider text-white leading-none mb-4 uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
@@ -93,7 +93,7 @@ export default function ZondaExperience({ scrollYProgress }: ZondaExperienceProp
       </div>
 
       {/* 3. BOTTOM SPECIFICATIONS PANEL */}
-      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-stretch gap-4 md:gap-8 pointer-events-auto">
+      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-stretch gap-4 md:gap-4 md:gap-8 pointer-events-auto">
         <AnimatePresence mode="wait">
           <div className="grid grid-cols-3 w-full gap-4">
             {activeContent.details.map((detail, idx) => (
@@ -106,7 +106,7 @@ export default function ZondaExperience({ scrollYProgress }: ZondaExperienceProp
                 className="hud-border hud-bg p-3 md:p-4 rounded-sm flex flex-col justify-between border-b-2 border-b-pagani-gold/40 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-2 h-2 bg-pagani-gold/20" />
-                <span className="text-[10px] md:text-[11px] font-orbitron tracking-[0.2em] text-gray-400 uppercase">
+                <span className="text-xs md:text-xs font-orbitron tracking-[0.2em] text-gray-400 uppercase">
                   {detail.label}
                 </span>
                 <span className="text-sm md:text-xl font-orbitron font-extrabold tracking-wider text-white mt-1 md:mt-2">

@@ -10,16 +10,16 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-32 px-6 md:px-12 bg-void relative"
+      className="py-16 md:py-32 px-6 md:px-12 bg-void relative"
     >
       <div className="max-w-7xl mx-auto">
         
         {/* Title */}
-        <div className="flex flex-col mb-16">
-          <span className="font-mono text-[10px] tracking-[0.35em] text-plasma mb-4 uppercase drop-shadow-[0_0_12px_rgba(214,255,0,0.6)]">
+        <div className="flex flex-col mb-8 md:mb-16">
+          <span className="font-mono text-xs tracking-[0.35em] text-plasma mb-4 uppercase drop-shadow-glow-plasma-sm">
             // OUR EXPERTISE
           </span>
-          <h2 className="font-bebas text-5xl md:text-8xl tracking-widest text-text uppercase leading-none">
+          <h2 className="font-bebas text-4xl md:text-6xl tracking-widest text-text uppercase leading-none">
             GARAGE <span className="text-plasma">SERVICES</span>
           </h2>
         </div>
@@ -37,10 +37,10 @@ export default function Services() {
                 onMouseLeave={() => setHoveredIdx(null)}
                 className="group relative border-b border-white/10 py-10 md:py-14 transition-colors duration-500 hover:bg-white/[0.02]"
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between relative z-10 gap-8 px-4 md:px-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between relative z-10 gap-4 md:gap-8 px-4 md:px-8">
                   
                   {/* Left: Number & Title */}
-                  <div className="flex items-center gap-8 md:w-1/2">
+                  <div className="flex items-center gap-4 md:gap-8 md:w-1/2">
                     <span className="font-mono text-sm text-muted/50 group-hover:text-plasma transition-colors duration-300">
                       0{idx + 1}
                     </span>
@@ -58,7 +58,7 @@ export default function Services() {
                       <IconComponent 
                         size={48} 
                         strokeWidth={1} 
-                        className="text-muted/30 group-hover:text-plasma group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 drop-shadow-[0_0_15px_rgba(214,255,0,0.4)]" 
+                        className="text-muted/30 group-hover:text-plasma group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 drop-shadow-glow-plasma-md" 
                       />
                     </div>
                     

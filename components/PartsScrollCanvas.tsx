@@ -128,7 +128,7 @@ export default function PartsScrollCanvas({
       {/* CANVAS */}
       <canvas
         ref={canvasRef}
-        className={`w-full h-full max-h-[85vh] transition-opacity duration-1000 ${
+        className={`w-full h-full max-h-85vh transition-opacity duration-1000 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       />

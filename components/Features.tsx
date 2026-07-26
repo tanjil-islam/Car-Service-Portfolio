@@ -6,21 +6,21 @@ import Image from "next/image";
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 px-6 md:px-12 bg-[#121212] border-t border-white/5 relative">
+    <section id="features" className="py-12 md:py-24 px-6 md:px-12 bg-void-light border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
-        <div className="flex flex-col mb-16 items-end text-right">
+        <div className="flex flex-col mb-8 md:mb-16 items-end text-right">
           <span className="font-orbitron text-xs tracking-[0.4em] text-pagani-gold mb-2 uppercase">
             // MASTERING THE ELEMENTS
           </span>
           <h2 className="font-orbitron text-3xl md:text-5xl font-black tracking-wide text-white uppercase">
             PERFORMANCE ENGINEERING
           </h2>
-          <div className="h-[2px] w-24 bg-pagani-gold mt-4" />
+          <div className="h-0.5 w-24 bg-pagani-gold mt-4" />
         </div>
 
         {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
           {keyFeatures.map((feature, idx) => (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -43,7 +43,7 @@ export default function Features() {
                 
                 {/* Metric Overlay */}
                 <div className="absolute bottom-4 left-4 flex flex-col">
-                  <span className="font-orbitron text-[10px] tracking-[0.3em] text-pagani-gold font-bold">
+                  <span className="font-orbitron text-xs tracking-[0.3em] text-pagani-gold font-bold">
                     METRIC VALUE
                   </span>
                   <span className="font-orbitron text-3xl font-black tracking-wide text-white glow-gold">
@@ -63,7 +63,7 @@ export default function Features() {
                   </p>
                 </div>
 
-                <div className="border-t border-white/5 pt-4 mt-6 flex justify-between items-center text-[10px] font-orbitron tracking-widest text-gray-500">
+                <div className="border-t border-white/5 pt-4 mt-6 flex justify-between items-center text-xs font-orbitron tracking-widest text-gray-500">
                   <span>TELEMETRY_REF: 0{idx + 1}</span>
                   <span className="text-pagani-gold/60">// SYNCED</span>
                 </div>

@@ -34,14 +34,14 @@ export default function RatingDashboard() {
   return (
     <section
       id="ratings"
-      className="py-32 px-6 md:px-12 bg-void border-t border-plasma/10 relative"
+      className="py-16 md:py-32 px-6 md:px-12 bg-void border-t border-plasma/10 relative"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 items-start">
           
           {/* Left panel: Overall Score and Bars */}
           <div className="lg:col-span-5 flex flex-col">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-plasma mb-2 uppercase drop-shadow-[0_0_8px_rgba(0,245,255,0.8)]">
+            <span className="font-mono text-xs tracking-[0.35em] text-plasma mb-2 uppercase drop-glow-cyan">
               // LOG_METRICS
             </span>
             <h2 className="font-bebas text-4xl md:text-6xl tracking-wide text-text uppercase mb-8 drop-shadow-md">
@@ -51,18 +51,18 @@ export default function RatingDashboard() {
             <div className="holo-panel p-6 rounded-xl border-t-2 border-t-plasma mb-6 shadow-[0_0_20px_rgba(122,0,255,0.1)_inset]">
               <div className="flex items-center gap-6 mb-6">
                 <div className="text-center font-mono">
-                  <div className="text-5xl md:text-6xl font-black text-plasma leading-none drop-shadow-[0_0_15px_rgba(0,245,255,0.5)]">
+                  <div className="text-4xl md:text-6xl font-black text-plasma leading-none drop-glow-cyan">
                     {reviewsRating}
                   </div>
                   <div className="text-gold text-xs tracking-wider mt-2 drop-shadow-[0_0_5px_rgba(255,0,127,0.5)]">★★★★★</div>
-                  <div className="text-[9px] text-muted tracking-widest mt-1 uppercase">
+                  <div className="text-xs text-muted tracking-widest mt-1 uppercase">
                     {reviewsCount} AUDIT LOGS
                   </div>
                 </div>
                 <div className="h-16 w-[2px] bg-holo-gradient rounded-full" />
                 
                 {/* Category ratings with grow bars */}
-                <div className="flex-1 flex flex-col gap-3 text-[10px] font-mono text-muted tracking-widest">
+                <div className="flex-1 flex flex-col gap-3 text-xs font-mono text-muted tracking-widest">
                   {[
                     { label: "QUALITY OF BUILD", value: "98%" },
                     { label: "COMPILING SPEED", value: "94%" },
@@ -71,15 +71,15 @@ export default function RatingDashboard() {
                     <div key={cIdx} className="flex flex-col gap-1.5">
                       <div className="flex justify-between">
                         <span>{cat.label}</span>
-                        <span className="text-plasma font-bold drop-shadow-[0_0_5px_rgba(0,245,255,0.5)]">{cat.value}</span>
+                        <span className="text-plasma font-bold drop-glow-cyan">{cat.value}</span>
                       </div>
-                      <div className="h-[2px] bg-plasma/20 overflow-hidden rounded-full">
+                      <div className="h-0.5 bg-plasma/20 overflow-hidden rounded-full">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: cat.value }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.8, delay: cIdx * 0.1 }}
-                          className="h-full bg-plasma glow-cyan shadow-[0_0_5px_rgba(0,245,255,0.8)]"
+                          className="h-full bg-plasma glow-cyan glow-cyan"
                         />
                       </div>
                     </div>
@@ -96,7 +96,7 @@ export default function RatingDashboard() {
                   { stars: 2, percentage: "1%" },
                   { stars: 1, percentage: "0%" },
                 ].map((bar) => (
-                  <div key={bar.stars} className="flex items-center gap-4 text-[11px] font-mono text-muted">
+                  <div key={bar.stars} className="flex items-center gap-4 text-xs font-mono text-muted">
                     <span className="w-4 text-plasma font-bold">{bar.stars}</span>
                     <div className="flex-1 h-2 bg-void border border-plasma/20 rounded-full overflow-hidden">
                       <motion.div
@@ -107,7 +107,7 @@ export default function RatingDashboard() {
                         className="h-full bg-holo-gradient"
                       />
                     </div>
-                    <span className="text-plasma font-bold w-10 text-right drop-shadow-[0_0_5px_rgba(0,245,255,0.3)]">{bar.percentage}</span>
+                    <span className="text-plasma font-bold w-10 text-right drop-glow-cyan">{bar.percentage}</span>
                   </div>
                 ))}
               </div>
@@ -116,14 +116,14 @@ export default function RatingDashboard() {
 
           {/* Right panel: Leave a transmission form */}
           <div className="lg:col-span-7 flex flex-col">
-            <span className="font-mono text-[10px] tracking-[0.35em] text-plasma mb-2 uppercase block drop-shadow-[0_0_8px_rgba(0,245,255,0.8)]">
+            <span className="font-mono text-xs tracking-[0.35em] text-plasma mb-2 uppercase block drop-glow-cyan">
               // BROADCAST_FORM
             </span>
             <h3 className="font-bebas text-3xl tracking-wider text-text uppercase mb-6 drop-shadow-md">
               LEAVE A <span className="text-holo-gradient glow-cyan">DIAGNOSTIC</span> LOG
             </h3>
 
-            <div className="holo-panel p-6 md:p-8 rounded-xl border border-plasma/20 shadow-[0_0_20px_rgba(122,0,255,0.1)_inset]">
+            <div className="holo-panel p-6 md:p-5 md:p-8 rounded-xl border border-plasma/20 shadow-[0_0_20px_rgba(122,0,255,0.1)_inset]">
               <AnimatePresence mode="wait">
                 {!submitted ? (
                   <motion.form
@@ -137,7 +137,7 @@ export default function RatingDashboard() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       {/* Name */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-plasma tracking-widest uppercase text-[10px] font-bold">
+                        <label className="text-plasma tracking-widest uppercase text-xs font-bold">
                           PILOT CALLSIGN
                         </label>
                         <input
@@ -146,13 +146,13 @@ export default function RatingDashboard() {
                           value={clientName}
                           onChange={(e) => setClientName(e.target.value)}
                           placeholder="e.g. H. KOVALAINEN"
-                          className="bg-void/50 border border-plasma/20 focus:border-plasma focus:shadow-[0_0_10px_rgba(0,245,255,0.3)] p-3.5 text-text rounded-md outline-none font-mono transition-all duration-300 text-xs"
+                          className="bg-void/50 border border-plasma/20 focus:border-plasma focus:glow-cyan p-3.5 text-text rounded-md outline-none font-mono transition-all duration-300 text-xs"
                         />
                       </div>
 
                       {/* Vehicle */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-plasma tracking-widest uppercase text-[10px] font-bold">
+                        <label className="text-plasma tracking-widest uppercase text-xs font-bold">
                           VEHICLE TYPE
                         </label>
                         <input
@@ -161,14 +161,14 @@ export default function RatingDashboard() {
                           value={vehicle}
                           onChange={(e) => setVehicle(e.target.value)}
                           placeholder="e.g. PAGANI ZONDA R"
-                          className="bg-void/50 border border-plasma/20 focus:border-plasma focus:shadow-[0_0_10px_rgba(0,245,255,0.3)] p-3.5 text-text rounded-md outline-none font-mono transition-all duration-300 text-xs"
+                          className="bg-void/50 border border-plasma/20 focus:border-plasma focus:glow-cyan p-3.5 text-text rounded-md outline-none font-mono transition-all duration-300 text-xs"
                         />
                       </div>
                     </div>
 
                     {/* Star Rating Select */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-plasma tracking-widest uppercase text-[10px] font-bold">
+                      <label className="text-plasma tracking-widest uppercase text-xs font-bold">
                         TRANSMISSION FEED STRENGTH
                       </label>
                       <div className="flex gap-2 text-2xl text-muted/30 cursor-pointer">
@@ -188,7 +188,7 @@ export default function RatingDashboard() {
 
                     {/* Message */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-plasma tracking-widest uppercase text-[10px] font-bold">
+                      <label className="text-plasma tracking-widest uppercase text-xs font-bold">
                         TRANSMISSION LOG DATA
                       </label>
                       <textarea
@@ -197,13 +197,13 @@ export default function RatingDashboard() {
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                         placeholder="PROVIDE DETAILED FEEDBACK ON ENGINE CALIBRATION SPECIFICATIONS..."
-                        className="bg-void/50 border border-plasma/20 focus:border-plasma focus:shadow-[0_0_10px_rgba(0,245,255,0.3)] p-3.5 text-text rounded-md outline-none font-mono transition-all duration-300 text-xs uppercase resize-none"
+                        className="bg-void/50 border border-plasma/20 focus:border-plasma focus:glow-cyan p-3.5 text-text rounded-md outline-none font-mono transition-all duration-300 text-xs uppercase resize-none"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="px-6 py-4 bg-holo-gradient text-void font-mono text-[11px] tracking-widest font-black uppercase transition-all duration-300 rounded-md cursor-pointer mt-2 hover:scale-[1.02] hover:glow-cyan shadow-[0_0_15px_rgba(0,245,255,0.3)]"
+                      className="px-6 py-4 bg-holo-gradient text-void font-mono text-xs tracking-widest font-black uppercase transition-all duration-300 rounded-md cursor-pointer mt-2 hover:scale-[1.02] hover:glow-cyan glow-cyan"
                     >
                       TRANSMIT DIAGNOSTIC FEED
                     </button>
@@ -216,8 +216,8 @@ export default function RatingDashboard() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     className="flex flex-col items-center justify-center py-16 text-center"
                   >
-                    <span className="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(0,245,255,0.5)]">📡</span>
-                    <span className="font-mono text-sm tracking-widest text-plasma font-bold block mb-3 drop-shadow-[0_0_5px_rgba(0,245,255,0.5)]">
+                    <span className="text-5xl mb-6 drop-glow-cyan">📡</span>
+                    <span className="font-mono text-sm tracking-widest text-plasma font-bold block mb-3 drop-glow-cyan">
                       FEED TRANSMISSION COMPLETED
                     </span>
                     <p className="text-xs text-muted max-w-sm leading-relaxed uppercase">

@@ -1,83 +1,200 @@
 "use client";
 
-import { useState, useRef, MouseEvent, TouchEvent } from "react";
+import { useState, useEffect, useRef, MouseEvent, TouchEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { caseFiles } from "@/data/RoadmenData";
 import Image from "next/image";
-import { X, ArrowUpRight } from "lucide-react";
+import { X, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 function BeforeAfterSlider() {
   const [sliderPos, setSliderPos] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const [containerWidth, setContainerWidth] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const animationFrameId = useRef<number | null>(null);
 
-  const handleMove = (clientX: number) => {
+  // ResizeObserver for instant container width sync
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+    updateWidth();
+
+    const resizeObserver = new ResizeObserver(() => updateWidth());
+    resizeObserver.observe(containerRef.current);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  // Smooth movement calculation with hardware-accelerated RAF throttling
+  const updatePosition = (clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPos(percentage);
+    
+    if (animationFrameId.current) {
+      cancelAnimationFrame(animationFrameId.current);
+    }
+    
+    animationFrameId.current = requestAnimationFrame(() => {
+      setSliderPos(percentage);
+    });
   };
 
-  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.buttons === 1) { // Click is active
-      handleMove(e.clientX);
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault(); // Stop native image drag or text selection
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setIsDragging(true);
+    updatePosition(e.clientX);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (isDragging) {
+      updatePosition(e.clientX);
     }
   };
 
-  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    if (e.touches[0]) {
-      handleMove(e.touches[0].clientX);
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch (err) {
+      // Ignore if pointer capture was already released
+    }
+  };
+
+  // Keyboard navigation for accessibility
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      setSliderPos((prev) => Math.max(0, prev - 5));
+    } else if (e.key === "ArrowRight") {
+      setSliderPos((prev) => Math.min(100, prev + 5));
+    } else if (e.key === "Home") {
+      setSliderPos(0);
+    } else if (e.key === "End") {
+      setSliderPos(100);
     }
   };
 
   return (
-    <div
-      ref={containerRef}
-      onMouseMove={onMouseMove}
-      onTouchMove={onTouchMove}
-      className="relative w-full h-[400px] md:h-[600px] border border-white/10 rounded-2xl overflow-hidden select-none cursor-ew-resize bg-void mb-24 group"
-    >
-      {/* Before Image (Background) */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?q=80&w=2000&auto=format&fit=crop"
-          alt="Before restoration"
-          fill
-          className="object-cover opacity-50 filter grayscale transition-transform duration-1000 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-void/40" />
-      </div>
-      <div className="absolute top-6 left-6 z-20 px-4 py-2 bg-void/80 backdrop-blur-md border border-white/10 text-[10px] font-mono tracking-widest text-text rounded-md uppercase">
-        RAW CHASSIS // BEFORE
-      </div>
-
-      {/* After Image (Overlay, width controlled) */}
+    <div className="flex flex-col items-center mb-6 md:mb-12 md:mb-24 w-full max-w-5xl mx-auto">
       <div
-        className="absolute inset-y-0 left-0 overflow-hidden z-10 pointer-events-none"
-        style={{ width: `${sliderPos}%` }}
+        ref={containerRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="slider"
+        aria-valuenow={Math.round(sliderPos)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Before and After Car Restoration Slider"
+        className="relative w-full aspect-[16/9] border-2 border-white/10 rounded-2xl overflow-hidden select-none cursor-ew-resize bg-void touch-none group shadow-[0_20px_60px_rgba(0,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-plasma/80 transition-shadow"
       >
-        <div className="absolute inset-y-0 left-0 w-[100vw] h-full">
-          <Image
-            src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2000&auto=format&fit=crop"
-            alt="After restoration"
-            fill
-            className="object-cover filter contrast-[1.1] transition-transform duration-1000 group-hover:scale-105"
+        {/* BEFORE IMAGE (Full Background) */}
+        <div className="absolute inset-0 z-0 w-full h-full pointer-events-none">
+          <img
+            src="/images/before_repair.png"
+            alt="Raw Chassis Before Repair"
+            draggable={false}
+            className="w-full h-full object-cover object-center block"
           />
+          <div className="absolute top-6 left-6 z-20 px-4 py-2 bg-void/85 backdrop-blur-md border border-white/10 text-xs font-mono tracking-widest text-text rounded-md uppercase flex items-center gap-2 shadow-lg pointer-events-none">
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            RAW CHASSIS // BEFORE REPAIR
+          </div>
         </div>
-      </div>
-      <div className="absolute top-6 right-6 z-20 px-4 py-2 bg-plasma text-void text-[10px] font-mono tracking-widest font-black rounded-md uppercase">
-        ENGINEERED // AFTER
+
+        {/* AFTER IMAGE (Pixel-Perfect Overlay Container) */}
+        <div
+          className="absolute inset-y-0 left-0 overflow-hidden z-10 pointer-events-none"
+          style={{ width: `${sliderPos}%` }}
+        >
+          <div
+            className="absolute inset-y-0 left-0 h-full max-w-none"
+            style={{ width: containerWidth ? `${containerWidth}px` : "100%" }}
+          >
+            <img
+              src="/images/after_repair.png"
+              alt="Engineered After Repair"
+              draggable={false}
+              className="w-full h-full object-cover object-center block"
+            />
+          </div>
+          <div className="absolute top-6 right-6 z-20 px-4 py-2 bg-plasma text-void text-xs font-mono tracking-widest font-black rounded-md uppercase flex items-center gap-2 shadow-glow-plasma-md">
+            <span className="w-2 h-2 rounded-full bg-void animate-ping" />
+            PERFORMANCE ENGINEERED // AFTER REPAIR
+          </div>
+        </div>
+
+        {/* Drag Slider Divider Line */}
+        <div
+          className={`absolute inset-y-0 w-[2px] bg-plasma z-20 pointer-events-none transition-shadow duration-300 ${
+            isDragging ? "shadow-[0_0_25px_#D6FF00]" : "shadow-[0_0_12px_#D6FF00]"
+          }`}
+          style={{ left: `${sliderPos}%` }}
+        >
+          {/* Handle Button with Active Drag Feedback */}
+          <div
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-plasma text-void flex items-center justify-center font-bold border-2 border-void cursor-ew-resize transition-transform duration-200 ${
+              isDragging
+                ? "scale-125 shadow-glow-plasma-lg bg-white"
+                : "group-hover:scale-110 shadow-glow-plasma-md"
+            }`}
+          >
+            <div className="flex items-center justify-center -space-x-1.5">
+              <ChevronLeft size={18} strokeWidth={4} />
+              <ChevronRight size={18} strokeWidth={4} />
+            </div>
+          </div>
+        </div>
+
+        {/* Dynamic Position HUD Pill */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 px-4 py-1.5 bg-void/80 backdrop-blur-md border border-white/10 text-xs font-mono tracking-widest text-muted rounded-full uppercase pointer-events-none flex items-center gap-3">
+          <span className="text-plasma font-bold">{Math.round(sliderPos)}% SPLIT</span>
+          <span className="text-white/30">//</span>
+          <span>SLIDE OR CLICK TO COMPARE</span>
+        </div>
       </div>
 
-      {/* Drag Slider Divider Bar */}
-      <div
-        className="absolute inset-y-0 w-[2px] bg-white z-20 pointer-events-none shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-        style={{ left: `${sliderPos}%` }}
-      >
-        {/* Handle Button */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-void shadow-xl">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </div>
+      {/* UX QUICK PRESET BUTTONS */}
+      <div className="flex items-center gap-3 mt-4">
+        <button
+          onClick={() => setSliderPos(0)}
+          className={`px-4 py-1.5 rounded-full font-mono text-xs tracking-widest uppercase transition-all border ${
+            sliderPos === 0
+              ? "bg-plasma text-void border-plasma font-bold"
+              : "bg-void/60 text-muted border-white/10 hover:border-white/30 hover:text-text"
+          }`}
+        >
+          100% BEFORE
+        </button>
+        <button
+          onClick={() => setSliderPos(50)}
+          className={`px-4 py-1.5 rounded-full font-mono text-xs tracking-widest uppercase transition-all border ${
+            sliderPos === 50
+              ? "bg-plasma text-void border-plasma font-bold"
+              : "bg-void/60 text-muted border-white/10 hover:border-white/30 hover:text-text"
+          }`}
+        >
+          50% SPLIT
+        </button>
+        <button
+          onClick={() => setSliderPos(100)}
+          className={`px-4 py-1.5 rounded-full font-mono text-xs tracking-widest uppercase transition-all border ${
+            sliderPos === 100
+              ? "bg-plasma text-void border-plasma font-bold"
+              : "bg-void/60 text-muted border-white/10 hover:border-white/30 hover:text-text"
+          }`}
+        >
+          100% AFTER
+        </button>
       </div>
     </div>
   );
@@ -96,16 +213,16 @@ export default function WorkGallery() {
   return (
     <section
       id="work"
-      className="py-32 px-6 md:px-16 lg:px-24 bg-void relative"
+      className="py-16 md:py-32 px-4 sm:px-6 md:px-16 lg:px-24 bg-void relative"
     >
       <div className="max-w-[1920px] mx-auto">
         
         {/* Title */}
-        <div className="flex flex-col mb-16">
+        <div className="flex flex-col mb-8 md:mb-16">
           <span className="font-mono text-xs tracking-[0.4em] text-plasma mb-6 uppercase">
             // CASE STUDIES
           </span>
-          <h2 className="font-bebas text-6xl md:text-8xl tracking-wider text-text uppercase leading-none">
+          <h2 className="font-bebas text-4xl md:text-6xl tracking-wider text-text uppercase leading-none">
             ENGINEERING <span className="text-muted">ARCHIVE</span>
           </h2>
         </div>
@@ -114,12 +231,12 @@ export default function WorkGallery() {
         <BeforeAfterSlider />
 
         {/* Filters */}
-        <div className="flex gap-4 flex-wrap mb-12 border-b border-white/10 pb-8">
+        <div className="flex gap-4 flex-wrap mb-6 md:mb-12 border-b border-white/10 pb-8">
           {filters.map((filter) => (
             <button
               key={filter}
               onClick={() => setSelectedFilter(filter)}
-              className={`font-mono text-[10px] tracking-widest uppercase px-6 py-3 rounded-full transition-all duration-300 cursor-pointer border ${
+              className={`font-mono text-xs tracking-widest uppercase px-6 py-3 rounded-full transition-all duration-300 cursor-pointer border ${
                 selectedFilter === filter
                   ? "border-plasma bg-plasma text-void font-bold"
                   : "border-white/10 text-muted hover:border-plasma/50 hover:text-plasma bg-white/5"
@@ -131,7 +248,7 @@ export default function WorkGallery() {
         </div>
 
         {/* Contact Sheet Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           <AnimatePresence mode="wait">
             {filteredProjects.map((project) => (
               <motion.div
@@ -159,8 +276,8 @@ export default function WorkGallery() {
                 </div>
 
                 {/* Details */}
-                <div className="p-8 relative z-20">
-                  <span className="text-[10px] font-mono tracking-widest text-plasma block mb-2 uppercase">
+                <div className="p-5 md:p-8 relative z-20">
+                  <span className="text-xs font-mono tracking-widest text-plasma block mb-2 uppercase">
                     {project.service} // {project.model}
                   </span>
                   <h3 className="font-bebas text-4xl tracking-wider text-text mb-6 uppercase">
@@ -184,13 +301,13 @@ export default function WorkGallery() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-void/90 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
+              className="fixed inset-0 z-50 bg-void/90 backdrop-blur-xl flex items-center justify-center p-4 md:p-6 md:p-12"
             >
               <motion.div
                 initial={{ scale: 0.95, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 20 }}
-                className="bg-panel border border-white/10 p-8 md:p-12 max-w-4xl w-full rounded-3xl relative overflow-hidden flex flex-col md:flex-row gap-12"
+                className="bg-panel border border-white/10 p-5 md:p-8 md:p-6 md:p-12 max-w-4xl w-full rounded-3xl relative overflow-hidden flex flex-col md:flex-row gap-6 md:gap-12"
               >
                 {/* Close Button */}
                 <button
@@ -201,10 +318,10 @@ export default function WorkGallery() {
                 </button>
 
                 <div className="md:w-1/2 flex flex-col justify-center">
-                  <span className="text-[10px] font-mono text-plasma tracking-[0.3em] block mb-4 uppercase">
+                  <span className="text-xs font-mono text-plasma tracking-[0.3em] block mb-4 uppercase">
                     LOG // {activeModalProject.model}
                   </span>
-                  <h3 className="font-bebas text-5xl md:text-6xl tracking-wider text-text uppercase mb-8 leading-none">
+                  <h3 className="font-bebas text-4xl md:text-6xl tracking-wider text-text uppercase mb-8 leading-none">
                     {activeModalProject.title}
                   </h3>
                   
@@ -214,13 +331,13 @@ export default function WorkGallery() {
                   
                   {activeModalProject.adjustmentData && (
                     <div className="border border-white/10 rounded-xl p-6 bg-void/50">
-                      <span className="text-[10px] font-mono text-plasma tracking-widest block mb-4 uppercase">
+                      <span className="text-xs font-mono text-plasma tracking-widest block mb-4 uppercase">
                         // CALIBRATION LOG
                       </span>
                       <div className="grid grid-cols-2 gap-6">
                         {Object.entries(activeModalProject.adjustmentData).map(([key, value]) => (
                           <div key={key} className="flex flex-col">
-                            <span className="text-[10px] font-mono text-muted uppercase mb-1">{key}</span>
+                            <span className="text-xs font-mono text-muted uppercase mb-1">{key}</span>
                             <span className="text-sm font-mono text-text uppercase">{value}</span>
                           </div>
                         ))}

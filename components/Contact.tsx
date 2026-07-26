@@ -23,9 +23,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 px-6 md:px-16 lg:px-24 bg-void relative">
+    <section id="contact" className="py-16 md:py-32 px-4 sm:px-6 md:px-16 lg:px-24 bg-void relative">
       <div className="max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 md:gap-16 lg:gap-5 md:gap-10 md:gap-24 items-stretch">
           
           {/* Left panel: Info & styled map */}
           <div className="lg:col-span-5 flex flex-col justify-between">
@@ -33,18 +33,18 @@ export default function Contact() {
               <span className="font-mono text-xs tracking-[0.4em] text-plasma mb-6 uppercase block">
                 // CONNECT
               </span>
-              <h2 className="font-bebas text-6xl md:text-8xl tracking-wider text-text uppercase mb-12 leading-none">
+              <h2 className="font-bebas text-4xl md:text-6xl tracking-wider text-text uppercase mb-6 md:mb-12 leading-none">
                 CONTACT <br />
                 <span className="text-muted">GARAGE</span>
               </h2>
               
-              <div className="flex flex-col gap-8 mb-16">
+              <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-16">
                 <div className="flex items-start gap-6 group">
                   <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-plasma transition-colors duration-300 shrink-0">
                     <MapPin className="text-muted group-hover:text-plasma transition-colors duration-300" size={20} />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-mono text-[10px] tracking-widest text-muted uppercase mb-1">HQ LOCATION</span>
+                    <span className="font-mono text-xs tracking-widest text-muted uppercase mb-1">HQ LOCATION</span>
                     <span className="font-mono text-sm tracking-wider text-text uppercase">Lake city,Concord. Khilkhet,<br/>Dhaka, Bangladesh, 1229</span>
                   </div>
                 </div>
@@ -54,7 +54,7 @@ export default function Contact() {
                     <Phone className="text-muted group-hover:text-plasma transition-colors duration-300" size={20} />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-mono text-[10px] tracking-widest text-muted uppercase mb-1">DIRECT LINE</span>
+                    <span className="font-mono text-xs tracking-widest text-muted uppercase mb-1">DIRECT LINE</span>
                     <span className="font-mono text-sm tracking-wider text-text uppercase">+880 1956-455165</span>
                   </div>
                 </div>
@@ -64,7 +64,7 @@ export default function Contact() {
                     <Mail className="text-muted group-hover:text-plasma transition-colors duration-300" size={20} />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-mono text-[10px] tracking-widest text-muted uppercase mb-1">EMAIL INQUIRIES</span>
+                    <span className="font-mono text-xs tracking-widest text-muted uppercase mb-1">EMAIL INQUIRIES</span>
                     <span className="font-mono text-sm tracking-wider text-text uppercase">info@roadmenbd.com</span>
                   </div>
                 </div>
@@ -74,11 +74,11 @@ export default function Contact() {
 
           {/* Right panel: message form */}
           <div className="lg:col-span-7">
-            <div className="bg-panel/30 p-8 md:p-12 rounded-3xl border border-white/5 h-full flex flex-col justify-center backdrop-blur-md">
+            <div className="bg-panel/30 p-5 md:p-8 md:p-6 md:p-12 rounded-3xl border border-white/5 h-full flex flex-col justify-center backdrop-blur-md">
               
               {!submitted ? (
-                <form onSubmit={handleContactSubmit} className="flex flex-col gap-8">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 md:gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
                     <div className="flex flex-col gap-3">
                       <label className="text-xs font-mono text-muted tracking-widest uppercase">
                         FULL NAME
@@ -134,7 +134,7 @@ export default function Contact() {
                   </button>
                 </form>
               ) : (
-                <div className="flex flex-col items-center justify-center py-32 text-center h-full">
+                <div className="flex flex-col items-center justify-center py-16 md:py-32 text-center h-full">
                   <Mail className="text-plasma mb-6" size={48} strokeWidth={1} />
                   <span className="font-mono text-sm tracking-widest text-text font-bold block mb-4 uppercase">
                     MESSAGE DELIVERED

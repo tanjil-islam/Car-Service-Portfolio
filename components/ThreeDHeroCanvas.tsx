@@ -128,8 +128,7 @@ export default function ThreeDHeroCanvas() {
   return (
     <div 
       ref={mountRef} 
-      className="absolute inset-0 w-full h-full z-0"
-      style={{ overflow: 'hidden' }}
+      className="absolute inset-0 w-full h-full z-0 overflow-hidden"
     />
   );
 }

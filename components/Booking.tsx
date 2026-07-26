@@ -178,7 +178,7 @@ export default function Booking() {
       },
     };
 
-    console.log("[BOOKING SERVICE] Payload Submitting:", payload);
+    // Submitting payload
 
     try {
       const response = await fetch("/api/commission", {
@@ -187,7 +187,7 @@ export default function Booking() {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      console.log("[BOOKING SERVICE] API Response:", data);
+      // Handle response
 
       if (data?.previewUrl) {
         setPreviewEmailUrl(data.previewUrl);
@@ -234,7 +234,7 @@ export default function Booking() {
   return (
     <section
       id="booking"
-      className="py-32 px-6 md:px-16 lg:px-24 bg-void relative"
+      className="py-16 md:py-32 px-4 sm:px-6 md:px-16 lg:px-24 bg-void relative"
     >
       {/* Toast Notification */}
       <AnimatePresence>
@@ -253,17 +253,17 @@ export default function Booking() {
 
       <div className="max-w-[1920px] mx-auto flex flex-col items-center">
         {/* Title */}
-        <div className="flex flex-col mb-16 items-center text-center">
+        <div className="flex flex-col mb-8 md:mb-16 items-center text-center">
           <span className="font-mono text-xs tracking-[0.4em] text-plasma mb-6 uppercase block">
             // CLIENT CONCIERGE
           </span>
-          <h2 className="font-bebas text-6xl md:text-8xl tracking-wider text-text uppercase leading-none">
+          <h2 className="font-bebas text-4xl md:text-6xl tracking-wider text-text uppercase leading-none">
             BOOK <span className="text-muted">APPOINTMENT</span>
           </h2>
         </div>
 
         {/* Console Container */}
-        <div className="w-full max-w-4xl bg-panel/30 p-8 md:p-12 rounded-3xl border border-white/5 relative overflow-hidden backdrop-blur-md">
+        <div className="w-full max-w-4xl bg-panel/30 p-5 md:p-8 md:p-6 md:p-12 rounded-3xl border border-white/5 relative overflow-hidden backdrop-blur-md">
           {/* Top Dynamic Green Progress Line */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-void/50">
             <div
@@ -283,7 +283,7 @@ export default function Booking() {
                 className="pt-6"
               >
                 {/* Step Header */}
-                <div className="flex justify-between items-end mb-12 border-b border-white/10 pb-6 font-mono text-xs">
+                <div className="flex justify-between items-end mb-6 md:mb-12 border-b border-white/10 pb-6 font-mono text-xs">
                   <span className="tracking-widest text-text uppercase font-semibold flex items-center gap-2">
                     {stepTitles[currentStep]}
                   </span>
@@ -304,9 +304,9 @@ export default function Booking() {
                           key={cat.id}
                           type="button"
                           onClick={() => setSelectedService(cat.id)}
-                          className={`p-8 border rounded-2xl flex flex-col items-start gap-6 text-left transition-all duration-300 cursor-pointer relative overflow-hidden group ${
+                          className={`p-5 md:p-8 border rounded-2xl flex flex-col items-start gap-6 text-left transition-all duration-300 cursor-pointer relative overflow-hidden group ${
                             isSelected
-                              ? "border-plasma bg-plasma/10 shadow-[0_0_25px_rgba(214,255,0,0.15)]"
+                              ? "border-plasma bg-plasma/10 shadow-glow-plasma-md"
                               : "border-white/10 hover:border-plasma/50 hover:bg-white/[0.02]"
                           }`}
                         >
@@ -321,7 +321,7 @@ export default function Booking() {
                               <IconComponent size={28} strokeWidth={1.5} />
                             </div>
                             {isSelected && (
-                              <span className="flex items-center gap-1 text-[10px] font-mono tracking-widest bg-plasma text-void px-2.5 py-1 rounded-full font-bold uppercase">
+                              <span className="flex items-center gap-1 text-xs font-mono tracking-widest bg-plasma text-void px-2.5 py-1 rounded-full font-bold uppercase">
                                 <Check size={12} /> SELECTED
                               </span>
                             )}
@@ -434,7 +434,7 @@ export default function Booking() {
                           <Clock size={14} className="text-plasma" /> PREFERRED TIME SLOT *
                         </label>
                         {preferredTime && (
-                          <span className="text-[10px] text-plasma tracking-widest uppercase font-bold bg-plasma/10 px-3 py-1 rounded-full border border-plasma/30">
+                          <span className="text-xs text-plasma tracking-widest uppercase font-bold bg-plasma/10 px-3 py-1 rounded-full border border-plasma/30">
                             SELECTED: {preferredTime}
                           </span>
                         )}
@@ -455,12 +455,12 @@ export default function Booking() {
                               }}
                               className={`p-3.5 border rounded-xl flex flex-col items-center justify-center transition-all duration-300 cursor-pointer ${
                                 isSelected
-                                  ? "border-plasma bg-plasma/15 text-plasma shadow-[0_0_15px_rgba(214,255,0,0.2)] font-bold"
+                                  ? "border-plasma bg-plasma/15 text-plasma shadow-glow-plasma-md font-bold"
                                   : "border-white/10 hover:border-plasma/50 hover:bg-white/[0.02] text-text"
                               }`}
                             >
                               <span className="text-sm font-bold tracking-widest">{slot.label}</span>
-                              <span className="text-[9px] text-muted tracking-wider uppercase mt-0.5">{slot.period}</span>
+                              <span className="text-xs text-muted tracking-wider uppercase mt-0.5">{slot.period}</span>
                             </button>
                           );
                         })}
@@ -479,14 +479,14 @@ export default function Booking() {
                           }}
                           className={`p-3.5 border rounded-xl flex flex-col items-center justify-center transition-all duration-300 cursor-pointer ${
                             isCustomTime
-                              ? "border-plasma bg-plasma/15 text-plasma shadow-[0_0_15px_rgba(214,255,0,0.2)] font-bold"
+                              ? "border-plasma bg-plasma/15 text-plasma shadow-glow-plasma-md font-bold"
                               : "border-white/10 hover:border-plasma/50 hover:bg-white/[0.02] text-text"
                           }`}
                         >
                           <span className="text-xs font-bold tracking-widest flex items-center gap-1">
                             + CUSTOM TIME
                           </span>
-                          <span className="text-[9px] text-muted tracking-wider uppercase mt-0.5">SET SPECIFIC HOUR</span>
+                          <span className="text-xs text-muted tracking-wider uppercase mt-0.5">SET SPECIFIC HOUR</span>
                         </button>
                       </div>
 
@@ -498,15 +498,15 @@ export default function Booking() {
                           className="mt-2 p-4 border border-plasma/30 bg-white/[0.02] rounded-xl flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
                         >
                           <div className="flex flex-col gap-1 flex-1">
-                            <span className="text-[10px] text-plasma tracking-widest uppercase font-bold">
+                            <span className="text-xs text-plasma tracking-widest uppercase font-bold">
                               SPECIFY CUSTOM APPOINTMENT TIME
                             </span>
-                            <span className="text-[11px] text-muted">
+                            <span className="text-xs text-muted">
                               Select an exact hour and minute for intake
                             </span>
                           </div>
-                          <input
-                            type="time"
+                          <label htmlFor="customTime" className="sr-only">Custom Time</label>
+                          <input id="customTime" type="time"
                             required
                             suppressHydrationWarning
                             value={customTimeValue}
@@ -539,10 +539,10 @@ export default function Booking() {
 
                 {/* STEP 4: REVIEW & CONTACT */}
                 {currentStep === 4 && (
-                  <div className="flex flex-col gap-8 font-mono text-xs">
+                  <div className="flex flex-col gap-4 md:gap-8 font-mono text-xs">
                     {/* Telemetry Summary Manifest Panel */}
-                    <div className="border border-plasma/30 bg-void/80 p-6 md:p-8 rounded-2xl relative overflow-hidden backdrop-blur-md">
-                      <div className="absolute top-0 right-0 bg-plasma/10 text-plasma font-mono text-[10px] px-4 py-1 border-b border-l border-plasma/30 uppercase tracking-widest">
+                    <div className="border border-plasma/30 bg-void/80 p-6 md:p-5 md:p-8 rounded-2xl relative overflow-hidden backdrop-blur-md">
+                      <div className="absolute top-0 right-0 bg-plasma/10 text-plasma font-mono text-xs px-4 py-1 border-b border-l border-plasma/30 uppercase tracking-widest">
                         PRE-FLIGHT MANIFEST
                       </div>
 
@@ -552,26 +552,26 @@ export default function Booking() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-muted tracking-widest">
                         <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-[10px] text-muted block mb-1 uppercase">SERVICE</span>
+                          <span className="text-xs text-muted block mb-1 uppercase">SERVICE</span>
                           <span className="text-text font-bold block uppercase text-sm">{selectedServiceTitle}</span>
                         </div>
 
                         <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-[10px] text-muted block mb-1 uppercase">VEHICLE</span>
+                          <span className="text-xs text-muted block mb-1 uppercase">VEHICLE</span>
                           <span className="text-text font-bold block uppercase text-sm truncate">
                             {vehicleMake} {vehicleModel} ({vehicleYear})
                           </span>
                         </div>
 
                         <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-[10px] text-muted block mb-1 uppercase">WINDOW</span>
+                          <span className="text-xs text-muted block mb-1 uppercase">WINDOW</span>
                           <span className="text-text font-bold block uppercase text-sm">
                             {preferredDate || "N/A"} @ {preferredTime || "N/A"}
                           </span>
                         </div>
 
                         <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-[10px] text-muted block mb-1 uppercase">ENGINE SPEC</span>
+                          <span className="text-xs text-muted block mb-1 uppercase">ENGINE SPEC</span>
                           <span className="text-text font-bold block uppercase text-sm truncate">
                             {engineSpec || "STANDARD"}
                           </span>
@@ -580,7 +580,7 @@ export default function Booking() {
 
                       {notes && (
                         <div className="mt-4 bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-[10px] text-muted block mb-1 uppercase">NOTES & PREFERENCES</span>
+                          <span className="text-xs text-muted block mb-1 uppercase">NOTES & PREFERENCES</span>
                           <span className="text-text block uppercase text-xs leading-relaxed">{notes}</span>
                         </div>
                       )}
@@ -609,7 +609,7 @@ export default function Booking() {
                               <Mail size={14} className="text-plasma" /> EMAIL ADDRESS *
                             </span>
                             {clientEmail.length > 0 && !isValidEmail(clientEmail) && (
-                              <span className="text-[10px] text-red-400 font-normal tracking-normal lowercase">
+                              <span className="text-xs text-red-400 font-normal tracking-normal lowercase">
                                 invalid format (e.g. name@domain.com)
                               </span>
                             )}
@@ -649,7 +649,7 @@ export default function Booking() {
                 )}
 
                 {/* Control Action Buttons */}
-                <div className="flex justify-between items-center mt-12 pt-6 border-t border-white/5">
+                <div className="flex justify-between items-center mt-6 md:mt-12 pt-6 border-t border-white/5">
                   {currentStep > 1 ? (
                     <button
                       type="button"
@@ -671,7 +671,7 @@ export default function Booking() {
                       onClick={handleNext}
                       className={`px-8 py-4 font-mono text-xs tracking-widest font-bold uppercase transition-all duration-300 rounded-xl cursor-pointer flex items-center gap-2 ${
                         isStepValid
-                          ? "bg-plasma text-void hover:bg-plasma/90 shadow-[0_0_20px_rgba(214,255,0,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+                          ? "bg-plasma text-void hover:bg-plasma/90 shadow-glow-plasma-md hover:scale-[1.02] active:scale-[0.98]"
                           : "bg-white/5 border border-white/10 text-muted/50 cursor-not-allowed opacity-50"
                       }`}
                     >
@@ -685,7 +685,7 @@ export default function Booking() {
                       disabled={!isStepValid || loading}
                       className={`px-8 py-4 font-mono text-xs tracking-widest font-black uppercase transition-all duration-300 rounded-xl cursor-pointer flex items-center gap-2 ${
                         isStepValid && !loading
-                          ? "bg-plasma text-void hover:bg-plasma/90 shadow-[0_0_25px_rgba(214,255,0,0.4)] hover:scale-[1.02] active:scale-[0.98]"
+                          ? "bg-plasma text-void hover:bg-plasma/90 shadow-glow-plasma-md hover:scale-[1.02] active:scale-[0.98]"
                           : "bg-white/5 border border-white/10 text-muted/50 cursor-not-allowed opacity-50"
                       }`}
                     >
@@ -710,7 +710,7 @@ export default function Booking() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="flex flex-col items-center justify-center py-16 text-center"
               >
-                <div className="w-20 h-20 bg-plasma/10 border-2 border-plasma rounded-full flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(214,255,0,0.3)] animate-pulse">
+                <div className="w-20 h-20 bg-plasma/10 border-2 border-plasma rounded-full flex items-center justify-center mb-8 shadow-glow-plasma-lg animate-pulse">
                   <CheckCircle size={40} className="text-plasma" />
                 </div>
 
@@ -718,7 +718,7 @@ export default function Booking() {
                   TRANSMISSION ACKNOWLEDGED // ID: {submittedManifestId}
                 </div>
 
-                <h3 className="font-bebas text-5xl md:text-6xl tracking-widest text-text uppercase mb-4">
+                <h3 className="font-bebas text-4xl md:text-6xl tracking-widest text-text uppercase mb-4">
                   APPOINTMENT <span className="text-plasma">SECURED</span>
                 </h3>
 
@@ -759,7 +759,7 @@ export default function Booking() {
                     type="button"
                     suppressHydrationWarning
                     onClick={resetForm}
-                    className="px-8 py-4 bg-plasma text-void font-mono text-xs tracking-widest uppercase font-black transition-all duration-300 rounded-xl cursor-pointer shadow-[0_0_20px_rgba(214,255,0,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+                    className="px-8 py-4 bg-plasma text-void font-mono text-xs tracking-widest uppercase font-black transition-all duration-300 rounded-xl cursor-pointer shadow-glow-plasma-md hover:scale-[1.02] active:scale-[0.98]"
                   >
                     START NEW APPOINTMENT
                   </button>

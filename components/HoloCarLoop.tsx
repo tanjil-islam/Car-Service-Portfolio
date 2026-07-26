@@ -112,24 +112,24 @@ export default function HoloCarLoop() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       {/* 3D Circular Radar/Telemetry Rings in background */}
-      <div className="absolute w-[280px] h-[280px] md:w-[450px] md:h-[450px] border border-plasma/10 rounded-full flex items-center justify-center z-0 animate-pulse">
-        <div className="w-[85%] h-[85%] border border-dashed border-holo/10 rounded-full animate-spin" style={{ animationDuration: "20s" }} />
-        <div className="w-[65%] h-[65%] border border-dashed border-plasma/5 rounded-full animate-spin" style={{ animationDuration: "15s", animationDirection: "reverse" }} />
+      <div className="absolute w-280px h-280px md:w-450px md:h-450px border border-plasma/10 rounded-full flex items-center justify-center z-0 animate-pulse">
+        <div className="w-5/6 h-5/6 border border-dashed border-holo/10 rounded-full animate-spin animate-duration-20" />
+        <div className="w-2/3 h-2/3 border border-dashed border-plasma/5 rounded-full animate-spin animate-duration-15 animate-reverse" />
         
         {/* Holographic Radar sweeps */}
-        <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_50%,rgba(0,245,255,0.05))] rounded-full animate-spin" style={{ animationDuration: "6s" }} />
+        <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_50%,rgba(0,245,255,0.05))] rounded-full animate-spin animate-duration-6" />
       </div>
 
       {/* CANVAS FOR LOOPING CAR */}
       <canvas
         ref={canvasRef}
-        className={`w-full h-full max-h-[40vh] md:max-h-[60vh] z-10 transition-opacity duration-1000 ${
+        className={`w-full h-full max-h-40vh md:max-h-[50vh] md:h-60vh z-10 transition-opacity duration-1000 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       />
 
       {/* Scanning status banner */}
-      <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-center text-[9px] font-orbitron text-plasma/40 tracking-wider">
+      <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-center text-xs font-orbitron text-plasma/40 tracking-wider">
         <span>SYS.HECT_SCAN: ACTIVE</span>
         <span className="animate-ping w-1.5 h-1.5 rounded-full bg-plasma" />
       </div>
