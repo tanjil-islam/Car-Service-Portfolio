@@ -110,7 +110,7 @@ export async function POST(request: Request) {
                 Our executive engineering team will review your specifications and contact you at <strong>${client?.phone}</strong>.
               </p>
               <div style="margin-top: 24px; border-top: 1px solid #222; padding-top: 16px; text-align: center; color: #555; font-size: 11px;">
-                ROADMEN PERFORMANCE // LOS ANGELES, CA
+                ROADMEN PERFORMANCE // LAKE CITY, CONCORD. KHILKHET, DHAKA, BANGLADESH, 1229
               </div>
             </div>
           `;

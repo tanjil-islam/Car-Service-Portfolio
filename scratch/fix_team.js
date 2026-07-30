@@ -1,6 +1,9 @@
-"use client";
+const fs = require('fs');
+
+const teamCode = `"use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { teamData } from "@/data/RoadmenData";
 
 export default function Team() {
@@ -30,8 +33,8 @@ export default function Team() {
                 className="group relative flex flex-col lg:justify-end rounded-xl overflow-hidden border border-white/5 bg-panel/30 lg:h-[500px]"
               >
                 {/* Image Section - Static top on mobile, absolute background on desktop */}
-                <div className="relative w-full h-[250px] min-h-[250px] sm:h-[300px] sm:min-h-[300px] lg:absolute lg:inset-0 lg:h-full lg:min-h-0 shrink-0 block overflow-hidden z-0">
-                  <img src={member.image} alt={member.name} className="absolute inset-0 w-full h-full object-cover object-top filter grayscale-0 lg:grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+                <div className="relative w-full h-[250px] sm:h-[300px] lg:absolute lg:inset-0 lg:h-full">
+                  <Image src={member.image} alt={member.name} fill className="object-cover object-top filter grayscale-0 lg:grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
                 </div>
                 
                 {/* Gradients for text readability (only necessary on desktop absolute overlay) */}
@@ -88,3 +91,7 @@ export default function Team() {
     </section>
   );
 }
+`;
+
+fs.writeFileSync('components/Team.tsx', teamCode);
+console.log("Re-wrote Team component for true mobile stacking.");

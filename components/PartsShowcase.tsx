@@ -29,7 +29,7 @@ export default function PartsShowcase() {
   const text3Opacity = useTransform(scrollYProgress, [0.62, 0.7, 1], [0.2, 1, 1]);
 
   return (
-    <section ref={containerRef} id="parts" className="relative h-[150vh] md:h-300vh bg-void max-w-[1920px] mx-auto">
+    <section ref={containerRef} id="parts" className="relative h-[300vh] bg-void max-w-[1920px] mx-auto">
       {/* RIGHT COLUMN: STICKY CANVAS */}
       <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-auto z-10">
         <div className="sticky top-0 w-full h-[100dvh] md:h-screen flex items-center justify-center p-4 lg:p-5 md:p-8">

@@ -413,17 +413,16 @@ export default function Booking() {
                 {currentStep === 3 && (
                   <div className="flex flex-col gap-6 font-mono text-xs">
                     <div className="flex flex-col gap-3">
-                      <label className="text-muted tracking-widest uppercase flex items-center gap-2">
+                      <label htmlFor="date" className="text-muted tracking-widest uppercase flex items-center gap-2">
                         <Calendar size={14} className="text-plasma" /> TARGET DROP-OFF DATE *
                       </label>
-                      <input
+                      <input id="date"
                         type="date"
                         required
                         suppressHydrationWarning
-                        min={new Date().toISOString().split("T")[0]}
                         value={preferredDate}
                         onChange={(e) => setPreferredDate(e.target.value)}
-                        className="bg-void border border-white/10 focus:border-plasma p-4 text-text rounded-xl outline-none tracking-widest transition-all duration-300 [&::-webkit-calendar-picker-indicator]:filter-[invert(1)] uppercase cursor-pointer"
+                        className="bg-void border border-white/10 focus:border-plasma p-4 text-text rounded-xl outline-none tracking-widest transition-all duration-300 [&::-webkit-calendar-picker-indicator]:invert cursor-pointer"
                       />
                     </div>
 
@@ -515,7 +514,7 @@ export default function Booking() {
                               setCustomTimeValue(val);
                               setPreferredTime(formatCustomTime(val));
                             }}
-                            className="bg-void border border-white/20 focus:border-plasma p-3 text-text rounded-xl outline-none tracking-widest transition-all text-sm font-bold [&::-webkit-calendar-picker-indicator]:filter-[invert(1)] uppercase cursor-pointer"
+                            className="bg-void border border-white/20 focus:border-plasma p-3 text-text rounded-xl outline-none tracking-widest transition-all text-sm font-bold [&::-webkit-calendar-picker-indicator]:invert cursor-pointer"
                           />
                         </motion.div>
                       )}

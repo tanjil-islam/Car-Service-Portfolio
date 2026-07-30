@@ -40,7 +40,7 @@ export default function Owner() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 md:gap-16 items-center">
           
           {/* Graphic / Avatar side */}
-          <div className="lg:col-span-6 relative h-[400px] md:h-600px md:h-[500px] md:h-800px rounded-2xl overflow-hidden group">
+          <div className="lg:col-span-6 relative h-[500px] md:h-[800px] rounded-2xl overflow-hidden group">
             <div className="absolute inset-0 bg-plasma/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
             <motion.div 
               className="w-full h-full"

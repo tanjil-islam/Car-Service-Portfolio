@@ -9,17 +9,48 @@ export default function Contact() {
   const [contactMessage, setContactMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactName || !contactEmail || !contactMessage) return;
 
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setContactName("");
-      setContactEmail("");
-      setContactMessage("");
-    }, 4000);
+    setIsSubmitting(true);
+    setErrorMsg("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contactName,
+          contactEmail,
+          contactMessage,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message.");
+      }
+
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setContactName("");
+        setContactEmail("");
+        setContactMessage("");
+      }, 5000);
+    } catch (error: any) {
+      console.error(error);
+      setErrorMsg(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -125,12 +156,19 @@ export default function Contact() {
                     />
                   </div>
 
+                  {errorMsg && (
+                    <div className="text-red-500 font-mono text-xs tracking-widest uppercase mt-2 border border-red-500/30 bg-red-500/10 p-4 rounded-xl">
+                      {errorMsg}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="flex items-center justify-center gap-4 py-5 bg-white text-void font-mono font-black text-xs tracking-widest uppercase rounded-xl transition-all hover:bg-plasma cursor-pointer mt-4"
+                    disabled={isSubmitting}
+                    className="flex items-center justify-center gap-4 py-5 bg-white text-void font-mono font-black text-xs tracking-widest uppercase rounded-xl transition-all hover:bg-plasma cursor-pointer mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    SEND MESSAGE
-                    <Send size={16} />
+                    {isSubmitting ? "TRANSMITTING..." : "SEND MESSAGE"}
+                    <Send size={16} className={isSubmitting ? "animate-pulse" : ""} />
                   </button>
                 </form>
               ) : (

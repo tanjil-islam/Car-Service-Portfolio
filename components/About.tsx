@@ -32,7 +32,7 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 lg:gap-4 md:gap-8 md:gap-16 items-start">
           
           {/* Large Editorial Image */}
-          <div className="lg:col-span-7 h-[50vh] md:h-60vh md:h-[60vh] md:h-80vh relative perspective-container" ref={containerRef}>
+          <div className="lg:col-span-7 h-[50vh] md:h-[80vh] relative perspective-container" ref={containerRef}>
             <motion.div 
               className="w-full h-full relative overflow-hidden bg-panel border border-white/5 rounded-2xl shadow-glow-plasma-lg"
               style={{ 

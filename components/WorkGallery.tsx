@@ -105,7 +105,7 @@ function BeforeAfterSlider() {
             draggable={false}
             className="w-full h-full object-cover object-center block"
           />
-          <div className="absolute top-6 left-6 z-20 px-4 py-2 bg-void/85 backdrop-blur-md border border-white/10 text-xs font-mono tracking-widest text-text rounded-md uppercase flex items-center gap-2 shadow-lg pointer-events-none">
+          <div className="hidden md:flex absolute top-6 left-6 z-20 px-4 py-2 bg-void/85 backdrop-blur-md border border-white/10 text-xs font-mono tracking-widest text-text rounded-md uppercase items-center gap-2 shadow-lg pointer-events-none">
             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             RAW CHASSIS // BEFORE REPAIR
           </div>
@@ -127,7 +127,7 @@ function BeforeAfterSlider() {
               className="w-full h-full object-cover object-center block"
             />
           </div>
-          <div className="absolute top-6 right-6 z-20 px-4 py-2 bg-plasma text-void text-xs font-mono tracking-widest font-black rounded-md uppercase flex items-center gap-2 shadow-glow-plasma-md">
+          <div className="hidden md:flex absolute top-6 right-6 z-20 px-4 py-2 bg-plasma text-void text-xs font-mono tracking-widest font-black rounded-md uppercase items-center gap-2 shadow-glow-plasma-md">
             <span className="w-2 h-2 rounded-full bg-void animate-ping" />
             PERFORMANCE ENGINEERED // AFTER REPAIR
           </div>
@@ -156,7 +156,7 @@ function BeforeAfterSlider() {
         </div>
 
         {/* Dynamic Position HUD Pill */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 px-4 py-1.5 bg-void/80 backdrop-blur-md border border-white/10 text-xs font-mono tracking-widest text-muted rounded-full uppercase pointer-events-none flex items-center gap-3">
+        <div className="hidden md:flex absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 px-4 py-1.5 bg-void/80 backdrop-blur-md border border-white/10 text-xs font-mono tracking-widest text-muted rounded-full uppercase pointer-events-none items-center gap-3">
           <span className="text-plasma font-bold">{Math.round(sliderPos)}% SPLIT</span>
           <span className="text-white/30">//</span>
           <span>SLIDE OR CLICK TO COMPARE</span>

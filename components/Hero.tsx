@@ -65,7 +65,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-[100dvh] md:h-screen min-h-[500px] md:min-h-[500px] md:h-800px flex items-center justify-center bg-void overflow-hidden"
+      className="relative h-[100dvh] md:h-screen min-h-[500px] md:min-h-[800px] flex items-center justify-center bg-void overflow-hidden"
     >
       {/* BACKGROUND VIDEO */}
       <div className="absolute inset-0 w-full h-full bg-void">
