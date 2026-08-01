@@ -307,7 +307,7 @@ export default function WorkGallery() {
                 initial={{ scale: 0.95, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 20 }}
-                className="bg-panel border border-white/10 p-5 md:p-8 md:p-6 md:p-12 max-w-4xl w-full rounded-3xl relative overflow-hidden flex flex-col md:flex-row gap-6 md:gap-12"
+                className="bg-panel border border-white/10 p-5 md:p-8 lg:p-12 max-w-4xl w-full rounded-3xl relative overflow-hidden flex flex-col md:flex-row gap-6 md:gap-12"
               >
                 {/* Close Button */}
                 <button

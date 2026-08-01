@@ -29,16 +29,14 @@ export default function PartsShowcase() {
   const text3Opacity = useTransform(scrollYProgress, [0.62, 0.7, 1], [0.2, 1, 1]);
 
   return (
-    <section ref={containerRef} id="parts" className="relative h-[300vh] bg-void max-w-[1920px] mx-auto">
+    <section ref={containerRef} id="parts" className="relative w-full max-w-[100vw] h-[300vh] bg-void lg:max-w-[1920px] mx-auto">
       {/* RIGHT COLUMN: STICKY CANVAS */}
       <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-auto z-10">
         <div className="sticky top-0 w-full h-[100dvh] md:h-screen flex items-center justify-center p-4 lg:p-5 md:p-8">
-          <div
-            className="w-full h-full max-h-85vh relative bg-panel/40 border border-white/10 rounded-[40px] overflow-hidden shadow-glow-plasma-sm will-change-transform transform-gpu preserve-3d"
-          >
+          <div className="w-full h-full max-h-[85vh] relative bg-panel/40 border border-white/10 rounded-[40px] overflow-hidden shadow-glow-plasma-sm will-change-transform transform-gpu">
             {/* Image 1: Precision Chassis */}
             <motion.div
-              className="absolute inset-0 w-full h-full pointer-events-none origin-center will-change-transform transform-gpu"
+              className="absolute inset-0 w-full h-full pointer-events-none origin-center"
               style={{
                 opacity: img1Opacity,
                 scale: img1Scale,
@@ -47,14 +45,14 @@ export default function PartsShowcase() {
               <img
                 src="/images/chassis_new.png"
                 alt="Precision Chassis"
-                className="w-full h-full object-cover filter contrast-[1.15] brightness-[0.95]"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-void/30" />
             </motion.div>
 
             {/* Image 2: V12 Engine */}
             <motion.div
-              className="absolute inset-0 w-full h-full pointer-events-none origin-center will-change-transform transform-gpu"
+              className="absolute inset-0 w-full h-full pointer-events-none origin-center"
               style={{
                 opacity: img2Opacity,
                 scale: img2Scale,
@@ -63,14 +61,14 @@ export default function PartsShowcase() {
               <img
                 src="/images/engine_new.png"
                 alt="V12 Engine"
-                className="w-full h-full object-cover filter contrast-[1.15] brightness-[0.95]"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-void/30" />
             </motion.div>
 
             {/* Image 3: Carbon Aero */}
             <motion.div
-              className="absolute inset-0 w-full h-full pointer-events-none origin-center will-change-transform transform-gpu"
+              className="absolute inset-0 w-full h-full pointer-events-none origin-center"
               style={{
                 opacity: img3Opacity,
                 scale: img3Scale,
@@ -79,7 +77,7 @@ export default function PartsShowcase() {
               <img
                 src="/images/aero_new.png"
                 alt="Carbon Aero Kit"
-                className="w-full h-full object-cover filter contrast-[1.15] brightness-[0.95]"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-void/30" />
             </motion.div>

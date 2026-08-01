@@ -10,7 +10,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-16 md:py-32 px-6 md:px-12 bg-void relative"
+      className="py-16 md:py-32 px-4 sm:px-6 md:px-16 lg:px-24 bg-void relative"
     >
       <div className="max-w-7xl mx-auto">
         

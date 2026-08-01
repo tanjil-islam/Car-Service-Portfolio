@@ -113,9 +113,9 @@ export default function Owner() {
                 
                 <div className="flex gap-4 items-center text-xs font-mono text-muted uppercase tracking-widest">
                   <span className="text-xs text-muted/50">// SOCIAL INDEX:</span>
-                  <a href="#" className="hover:text-plasma transition-colors duration-300">INSTAGRAM</a>
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-plasma transition-colors duration-300">INSTAGRAM</a>
                   <span>/</span>
-                  <a href="#" className="hover:text-plasma transition-colors duration-300">LINKEDIN</a>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-plasma transition-colors duration-300">LINKEDIN</a>
                 </div>
               </div>
             </div>

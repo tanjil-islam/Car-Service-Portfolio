@@ -50,7 +50,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className={`bg-void text-text antialiased ${fontInter.variable} ${fontBebas.variable} ${fontMono.variable} font-inter selection:bg-plasma selection:text-void`}>
+      <body suppressHydrationWarning className={`bg-void text-text antialiased ${fontInter.variable} ${fontBebas.variable} ${fontMono.variable} font-inter selection:bg-plasma selection:text-void w-full`}>
         {/* Global Film Grain Noise */}
         <div className="film-grain" />
         {children}

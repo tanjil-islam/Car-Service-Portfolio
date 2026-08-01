@@ -65,7 +65,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-[100dvh] md:h-screen min-h-[500px] md:min-h-[800px] flex items-center justify-center bg-void overflow-hidden"
+      className="relative w-full max-w-[1920px] mx-auto h-[100dvh] md:h-screen min-h-[500px] md:min-h-[800px] flex items-center justify-center bg-void overflow-hidden"
     >
       {/* BACKGROUND VIDEO */}
       <div className="absolute inset-0 w-full h-full bg-void">
@@ -123,7 +123,7 @@ export default function Hero() {
         <motion.div variants={itemVariants} className="mt-10 md:mt-20 group relative">
           <div className="absolute inset-0 bg-plasma opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500 rounded-full" />
           <a
-            href="#parts"
+            href="/parts"
             className="flex items-center gap-4 px-10 py-5 bg-panel border border-white/10 text-text font-mono text-sm tracking-widest uppercase transition-all duration-500 rounded-full hover:border-plasma hover:bg-white/5 backdrop-blur-md"
           >
             DISCOVER SCHEMATICS

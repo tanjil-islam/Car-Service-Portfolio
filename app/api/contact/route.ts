@@ -3,9 +3,9 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
-    const { contactName, contactEmail, contactMessage } = await req.json();
+    const { contactName, contactPhoneEmail, contactSubject, contactMessage } = await req.json();
 
-    if (!contactName || !contactEmail || !contactMessage) {
+    if (!contactName || !contactPhoneEmail || !contactSubject || !contactMessage) {
       return NextResponse.json({ error: 'All fields are required.' }, { status: 400 });
     }
 
@@ -19,32 +19,29 @@ export async function POST(req: Request) {
       );
     }
 
-    // Configure the transporter
-    // For Gmail, use host 'smtp.gmail.com' and port 465 or 587
-    // Adjust if using Outlook or another provider (e.g. smtp.office365.com)
     const port = Number(process.env.SMTP_PORT) || 465;
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: port,
-      secure: port === 465, // true for 465, false for other ports (like 587)
+      secure: port === 465,
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS,
       },
     });
 
-    // Email content
     const mailOptions = {
-      from: `"${contactName}" <${SMTP_USER}>`, // Sent via authenticated user to avoid spam filters
-      replyTo: contactEmail,                   // The user's actual email they entered
-      to: ADMIN_EMAIL,                         // Where you want to receive the email
-      subject: `New Garage Inquiry from ${contactName}`,
-      text: `Name: ${contactName}\nEmail: ${contactEmail}\n\nMessage:\n${contactMessage}`,
+      from: `"${contactName}" <${SMTP_USER}>`, 
+      replyTo: contactPhoneEmail.includes('@') ? contactPhoneEmail : undefined,
+      to: ADMIN_EMAIL,
+      subject: `[${contactSubject}] New Inquiry from ${contactName}`,
+      text: `Name: ${contactName}\nPhone/Email: ${contactPhoneEmail}\nSubject: ${contactSubject}\n\nMessage:\n${contactMessage}`,
       html: `
         <div style="font-family: monospace; max-width: 600px; padding: 20px; border: 1px solid #333; background: #000; color: #fff;">
-          <h2 style="color: #c4ff00; text-transform: uppercase;">// NEW GARAGE INQUIRY</h2>
+          <h2 style="color: #e50914; text-transform: uppercase;">// NEW GARAGE INQUIRY</h2>
           <p style="margin-top: 20px;"><strong>NAME:</strong> ${contactName}</p>
-          <p><strong>EMAIL:</strong> <a href="mailto:${contactEmail}" style="color: #c4ff00;">${contactEmail}</a></p>
+          <p><strong>CONTACT INFO:</strong> <span style="color: #e50914;">${contactPhoneEmail}</span></p>
+          <p><strong>SUBJECT:</strong> ${contactSubject}</p>
           <hr style="border: none; border-top: 1px solid #333; margin: 20px 0;" />
           <p style="text-transform: uppercase; color: #888; font-size: 12px; letter-spacing: 2px;">MESSAGE DETAILS</p>
           <p style="white-space: pre-wrap; font-size: 14px; line-height: 1.5;">${contactMessage}</p>

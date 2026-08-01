@@ -35,24 +35,25 @@ export default function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 font-mono text-xs tracking-widest uppercase">
             <div className="flex flex-col gap-4">
               <span className="text-plasma mb-2">NAVIGATION</span>
-              <a href="#hero" className="text-muted hover:text-text transition-colors">HOME</a>
-              <a href="#parts" className="text-muted hover:text-text transition-colors">PARTS</a>
-              <a href="#services" className="text-muted hover:text-text transition-colors">SERVICES</a>
-              <a href="#about" className="text-muted hover:text-text transition-colors">ABOUT</a>
+              <a href="/#hero" className="text-muted hover:text-text transition-colors">HOME</a>
+              <a href="/parts" className="text-muted hover:text-text transition-colors">PARTS</a>
+              <a href="/services" className="text-muted hover:text-text transition-colors">SERVICES</a>
+              <a href="/#about" className="text-muted hover:text-text transition-colors">ABOUT</a>
+              <a href="/contact" className="text-muted hover:text-text transition-colors">CONTACT</a>
             </div>
             
             <div className="flex flex-col gap-4">
               <span className="text-plasma mb-2">SERVICES</span>
-              <a href="#services" className="text-muted hover:text-text transition-colors">DELIVERY</a>
-              <a href="#booking" className="text-muted hover:text-text transition-colors">ONLINE BOOKING</a>
-              <a href="#booking" className="text-muted hover:text-text transition-colors">RESERVATIONS</a>
+              <a href="/#services" className="text-muted hover:text-text transition-colors">DELIVERY</a>
+              <a href="/booking" className="text-muted hover:text-text transition-colors">ONLINE BOOKING</a>
+              <a href="/booking" className="text-muted hover:text-text transition-colors">RESERVATIONS</a>
             </div>
             
             <div className="flex flex-col gap-4">
               <span className="text-plasma mb-2">SOCIAL</span>
-              <a href="#" className="text-muted hover:text-text transition-colors flex items-center gap-2">INSTAGRAM <ArrowUpRight size={14} /></a>
-              <a href="#" className="text-muted hover:text-text transition-colors flex items-center gap-2">FACEBOOK <ArrowUpRight size={14} /></a>
-              <a href="#" className="text-muted hover:text-text transition-colors flex items-center gap-2">YOUTUBE <ArrowUpRight size={14} /></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors flex items-center gap-2">INSTAGRAM <ArrowUpRight size={14} /></a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors flex items-center gap-2">FACEBOOK <ArrowUpRight size={14} /></a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors flex items-center gap-2">YOUTUBE <ArrowUpRight size={14} /></a>
             </div>
           </div>
           

@@ -1,14 +1,12 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import PartsShowcase from "@/components/PartsShowcase";
 import About from "@/components/About";
 import Owner from "@/components/Owner";
 import Team from "@/components/Team";
-import Services from "@/components/Services";
 import WorkGallery from "@/components/WorkGallery";
 import Testimonials from "@/components/Testimonials";
-import Booking from "@/components/Booking";
-import Contact from "@/components/Contact";
+import LocationMap from "@/components/LocationMap";
+
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -19,15 +17,12 @@ export default function Home() {
 
       {/* SECTION BLOCKS */}
       <Hero />
-      <PartsShowcase />
       <About />
       <Owner />
       <Team />
-      <Services />
       <WorkGallery />
       <Testimonials />
-      <Booking />
-      <Contact />
+      <LocationMap />
       <Footer />
     </main>
   );

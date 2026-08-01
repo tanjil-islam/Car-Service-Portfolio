@@ -1,0 +1,152 @@
+[
+  {
+    "page": "Home",
+    "viewport": "Mobile",
+    "scrollMetrics": {
+      "scrollWidth": 1928,
+      "clientWidth": 390,
+      "hasHorizontalScroll": true
+    },
+    "screenshot": "screenshots/home_mobile.png"
+  },
+  {
+    "page": "Home",
+    "viewport": "Tablet",
+    "scrollMetrics": {
+      "scrollWidth": 1928,
+      "clientWidth": 768,
+      "hasHorizontalScroll": true
+    },
+    "screenshot": "screenshots/home_tablet.png"
+  },
+  {
+    "page": "Home",
+    "viewport": "Desktop",
+    "scrollMetrics": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/home_desktop.png"
+  },
+  {
+    "page": "Booking",
+    "viewport": "Mobile",
+    "scrollMetrics": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/booking_mobile.png"
+  },
+  {
+    "page": "Booking",
+    "viewport": "Tablet",
+    "scrollMetrics": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/booking_tablet.png"
+  },
+  {
+    "page": "Booking",
+    "viewport": "Desktop",
+    "scrollMetrics": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/booking_desktop.png"
+  },
+  {
+    "page": "Services",
+    "viewport": "Mobile",
+    "scrollMetrics": {
+      "scrollWidth": 404,
+      "clientWidth": 390,
+      "hasHorizontalScroll": true
+    },
+    "screenshot": "screenshots/services_mobile.png"
+  },
+  {
+    "page": "Services",
+    "viewport": "Tablet",
+    "scrollMetrics": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/services_tablet.png"
+  },
+  {
+    "page": "Services",
+    "viewport": "Desktop",
+    "scrollMetrics": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/services_desktop.png"
+  },
+  {
+    "page": "Parts",
+    "viewport": "Mobile",
+    "scrollMetrics": {
+      "scrollWidth": 1032,
+      "clientWidth": 390,
+      "hasHorizontalScroll": true
+    },
+    "screenshot": "screenshots/parts_mobile.png"
+  },
+  {
+    "page": "Parts",
+    "viewport": "Tablet",
+    "scrollMetrics": {
+      "scrollWidth": 1032,
+      "clientWidth": 768,
+      "hasHorizontalScroll": true
+    },
+    "screenshot": "screenshots/parts_tablet.png"
+  },
+  {
+    "page": "Parts",
+    "viewport": "Desktop",
+    "scrollMetrics": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/parts_desktop.png"
+  },
+  {
+    "page": "Contact",
+    "viewport": "Mobile",
+    "scrollMetrics": {
+      "scrollWidth": 404,
+      "clientWidth": 390,
+      "hasHorizontalScroll": true
+    },
+    "screenshot": "screenshots/contact_mobile.png"
+  },
+  {
+    "page": "Contact",
+    "viewport": "Tablet",
+    "scrollMetrics": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/contact_tablet.png"
+  },
+  {
+    "page": "Contact",
+    "viewport": "Desktop",
+    "scrollMetrics": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "hasHorizontalScroll": false
+    },
+    "screenshot": "screenshots/contact_desktop.png"
+  }
+]

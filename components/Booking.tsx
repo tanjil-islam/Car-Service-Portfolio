@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
+import { gridServicesData } from "@/data/RoadmenData";
 import {
   Wrench,
   Zap,
   Search,
   Shield,
+  Settings,
   CheckCircle,
   ArrowLeft,
   ArrowRight,
@@ -20,32 +23,7 @@ import {
   Check,
 } from "lucide-react";
 
-const SERVICES = [
-  {
-    id: "engine",
-    title: "Engine Rebuild",
-    subtitle: "Full Overhaul & Blueprinting",
-    icon: Wrench,
-  },
-  {
-    id: "performance",
-    title: "Dyno & Tune",
-    subtitle: "ECU Mapping & Power Tuning",
-    icon: Zap,
-  },
-  {
-    id: "diagnostics",
-    title: "Diagnostics",
-    subtitle: "Telemetry & Deep System Analysis",
-    icon: Search,
-  },
-  {
-    id: "bodywork",
-    title: "Aero & Paint",
-    subtitle: "Custom Carbon, PPF & Refinishing",
-    icon: Shield,
-  },
-];
+// Services imported from RoadmenData
 
 const TIME_SLOTS = [
   { id: "08:00 AM", label: "08:00 AM", period: "EARLY MORNING" },
@@ -76,8 +54,17 @@ export default function Booking() {
   const [submittedManifestId, setSubmittedManifestId] = useState<string>("");
   const [previewEmailUrl, setPreviewEmailUrl] = useState<string>("");
 
-  // Step 1 State: Selected Service
   const [selectedService, setSelectedService] = useState<string>("");
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const serviceParam = searchParams.get("service");
+    if (serviceParam && gridServicesData.find(s => s.id === serviceParam)) {
+      setSelectedService(serviceParam);
+      setCurrentStep(2);
+    }
+  }, [searchParams]);
 
   // Step 2 State: Vehicle Details
   const [vehicleMake, setVehicleMake] = useState("");
@@ -109,12 +96,8 @@ export default function Booking() {
         return Boolean(selectedService);
       case 2:
         return Boolean(
-          vehicleMake.trim() && vehicleModel.trim() && vehicleYear.trim()
-        );
-      case 3:
-        return Boolean(preferredDate && preferredTime);
-      case 4:
-        return Boolean(
+          vehicleMake.trim() && vehicleModel.trim() && vehicleYear.trim() &&
+          preferredDate && preferredTime &&
           clientName.trim() && isValidEmail(clientEmail) && clientPhone.trim()
         );
       default:
@@ -122,11 +105,11 @@ export default function Booking() {
     }
   })();
 
-  const progressPercent = (currentStep / 4) * 100;
+  const progressPercent = (currentStep / 2) * 100;
 
   const handleNext = () => {
     if (!isStepValid) return;
-    if (currentStep < 4) {
+    if (currentStep < 2) {
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -151,7 +134,7 @@ export default function Booking() {
     setLoading(true);
 
     const manifestId = `APT-${Math.floor(100000 + Math.random() * 900000)}`;
-    const selectedServiceData = SERVICES.find((s) => s.id === selectedService);
+    const selectedServiceData = gridServicesData.find((s) => s.id === selectedService);
 
     const payload = {
       commissionId: manifestId,
@@ -223,13 +206,11 @@ export default function Booking() {
 
   const stepTitles: Record<number, string> = {
     1: "01 // SELECT SERVICE TYPE",
-    2: "02 // VEHICLE DETAILS",
-    3: "03 // REQUIREMENTS & SCHEDULE",
-    4: "04 // REVIEW & CONTACT",
+    2: "02 // VEHICLE, SCHEDULE & CONTACT",
   };
 
   const selectedServiceTitle =
-    SERVICES.find((s) => s.id === selectedService)?.title || "NOT SELECTED";
+    gridServicesData.find((s) => s.id === selectedService)?.title || "NOT SELECTED";
 
   return (
     <section
@@ -263,7 +244,7 @@ export default function Booking() {
         </div>
 
         {/* Console Container */}
-        <div className="w-full max-w-4xl bg-panel/30 p-5 md:p-8 md:p-6 md:p-12 rounded-3xl border border-white/5 relative overflow-hidden backdrop-blur-md">
+        <div className="w-full max-w-4xl bg-panel/30 p-5 md:p-8 lg:p-12 rounded-3xl border border-white/5 relative overflow-hidden backdrop-blur-md">
           {/* Top Dynamic Green Progress Line */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-void/50">
             <div
@@ -288,15 +269,15 @@ export default function Booking() {
                     {stepTitles[currentStep]}
                   </span>
                   <span className="text-plasma font-bold tracking-widest">
-                    STEP {currentStep}/4
+                    STEP {currentStep}/2
                   </span>
                 </div>
 
                 {/* STEP 1: SERVICE SELECTION */}
                 {currentStep === 1 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {SERVICES.map((cat) => {
-                      const IconComponent = cat.icon;
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+                    {gridServicesData.map((cat) => {
+                      const Icon = cat.icon;
                       const isSelected = selectedService === cat.id;
 
                       return (
@@ -304,50 +285,41 @@ export default function Booking() {
                           key={cat.id}
                           type="button"
                           onClick={() => setSelectedService(cat.id)}
-                          className={`p-5 md:p-8 border rounded-2xl flex flex-col items-start gap-6 text-left transition-all duration-300 cursor-pointer relative overflow-hidden group ${
+                          className={`relative flex flex-col items-center justify-center p-6 text-center border transition-all duration-500 rounded-2xl group ${
                             isSelected
-                              ? "border-plasma bg-plasma/10 shadow-glow-plasma-md"
-                              : "border-white/10 hover:border-plasma/50 hover:bg-white/[0.02]"
+                              ? "bg-plasma/10 border-plasma"
+                              : "bg-void border-white/5 hover:border-white/20 hover:bg-white/[0.02]"
                           }`}
                         >
-                          <div className="w-full flex justify-between items-center">
-                            <div
-                              className={`p-3 rounded-xl transition-colors ${
-                                isSelected
-                                  ? "bg-plasma text-void"
-                                  : "bg-white/5 text-muted group-hover:text-plasma"
-                              }`}
-                            >
-                              <IconComponent size={28} strokeWidth={1.5} />
+                          {isSelected && (
+                            <div className="absolute top-4 right-4 text-plasma">
+                              <CheckCircle size={18} />
                             </div>
-                            {isSelected && (
-                              <span className="flex items-center gap-1 text-xs font-mono tracking-widest bg-plasma text-void px-2.5 py-1 rounded-full font-bold uppercase">
-                                <Check size={12} /> SELECTED
-                              </span>
-                            )}
+                          )}
+                          <div
+                            className={`p-4 rounded-xl mb-4 transition-colors duration-300 ${
+                              isSelected ? "bg-plasma text-void" : "bg-white/5 text-muted group-hover:text-text"
+                            }`}
+                          >
+                            <Icon size={28} strokeWidth={isSelected ? 2 : 1.5} />
                           </div>
-
-                          <div className="flex flex-col font-mono">
-                            <span
-                              className={`text-lg tracking-widest uppercase mb-1 font-bold ${
-                                isSelected ? "text-plasma" : "text-text"
-                              }`}
-                            >
-                              {cat.title}
-                            </span>
-                            <span className="text-xs text-muted tracking-wider">
-                              {cat.subtitle}
-                            </span>
-                          </div>
+                          <h4 className="text-text font-bold uppercase tracking-widest text-sm mb-1">{cat.title}</h4>
                         </button>
                       );
                     })}
                   </div>
                 )}
 
-                {/* STEP 2: VEHICLE DETAILS */}
+                {/* STEP 2: VEHICLE, SCHEDULE & CONTACT */}
                 {currentStep === 2 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-mono text-xs">
+                  <form id="commission-form" onSubmit={handleSubmit} className="flex flex-col gap-12 md:gap-16 font-mono text-xs">
+                    
+                    {/* SECTION 1: VEHICLE DETAILS */}
+                    <div className="flex flex-col gap-6">
+                      <span className="text-plasma tracking-widest uppercase font-bold flex items-center gap-2 border-b border-white/10 pb-4">
+                        // 01. VEHICLE DETAILS
+                      </span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-3">
                       <label className="text-muted tracking-widest uppercase flex items-center gap-2">
                         <Car size={14} className="text-plasma" /> VEHICLE MAKE *
@@ -407,11 +379,14 @@ export default function Booking() {
                       />
                     </div>
                   </div>
-                )}
+                </div>
 
-                {/* STEP 3: REQUIREMENTS & SCHEDULE */}
-                {currentStep === 3 && (
-                  <div className="flex flex-col gap-6 font-mono text-xs">
+                {/* SECTION 2: REQUIREMENTS & SCHEDULE */}
+                <div className="flex flex-col gap-6">
+                  <span className="text-plasma tracking-widest uppercase font-bold flex items-center gap-2 border-b border-white/10 pb-4">
+                    // 02. SCHEDULE & NOTES
+                  </span>
+                  <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-3">
                       <label htmlFor="date" className="text-muted tracking-widest uppercase flex items-center gap-2">
                         <Calendar size={14} className="text-plasma" /> TARGET DROP-OFF DATE *
@@ -534,59 +509,14 @@ export default function Booking() {
                       />
                     </div>
                   </div>
-                )}
+                </div>
 
-                {/* STEP 4: REVIEW & CONTACT */}
-                {currentStep === 4 && (
-                  <div className="flex flex-col gap-4 md:gap-8 font-mono text-xs">
-                    {/* Telemetry Summary Manifest Panel */}
-                    <div className="border border-plasma/30 bg-void/80 p-6 md:p-5 md:p-8 rounded-2xl relative overflow-hidden backdrop-blur-md">
-                      <div className="absolute top-0 right-0 bg-plasma/10 text-plasma font-mono text-xs px-4 py-1 border-b border-l border-plasma/30 uppercase tracking-widest">
-                        PRE-FLIGHT MANIFEST
-                      </div>
-
-                      <span className="text-plasma tracking-widest block mb-6 uppercase font-bold flex items-center gap-2">
-                        // APPOINTMENT SPECIFICATION
-                      </span>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-muted tracking-widest">
-                        <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-xs text-muted block mb-1 uppercase">SERVICE</span>
-                          <span className="text-text font-bold block uppercase text-sm">{selectedServiceTitle}</span>
-                        </div>
-
-                        <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-xs text-muted block mb-1 uppercase">VEHICLE</span>
-                          <span className="text-text font-bold block uppercase text-sm truncate">
-                            {vehicleMake} {vehicleModel} ({vehicleYear})
-                          </span>
-                        </div>
-
-                        <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-xs text-muted block mb-1 uppercase">WINDOW</span>
-                          <span className="text-text font-bold block uppercase text-sm">
-                            {preferredDate || "N/A"} @ {preferredTime || "N/A"}
-                          </span>
-                        </div>
-
-                        <div className="bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-xs text-muted block mb-1 uppercase">ENGINE SPEC</span>
-                          <span className="text-text font-bold block uppercase text-sm truncate">
-                            {engineSpec || "STANDARD"}
-                          </span>
-                        </div>
-                      </div>
-
-                      {notes && (
-                        <div className="mt-4 bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                          <span className="text-xs text-muted block mb-1 uppercase">NOTES & PREFERENCES</span>
-                          <span className="text-text block uppercase text-xs leading-relaxed">{notes}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <form id="commission-form" onSubmit={handleSubmit} className="flex flex-col gap-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {/* SECTION 3: CONTACT INFORMATION */}
+                <div className="flex flex-col gap-6">
+                  <span className="text-plasma tracking-widest uppercase font-bold flex items-center gap-2 border-b border-white/10 pb-4">
+                    // 03. CONTACT INFORMATION
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <div className="flex flex-col gap-3">
                           <label className="text-muted tracking-widest uppercase flex items-center gap-2">
                             <User size={14} className="text-plasma" /> FULL NAME *
@@ -643,8 +573,8 @@ export default function Booking() {
                           />
                         </div>
                       </div>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                 )}
 
                 {/* Control Action Buttons */}
@@ -662,7 +592,7 @@ export default function Booking() {
                     <div />
                   )}
 
-                  {currentStep < 4 ? (
+                  {currentStep < 2 ? (
                     <button
                       type="button"
                       suppressHydrationWarning
@@ -753,7 +683,17 @@ export default function Booking() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
+                  {previewEmailUrl && (
+                    <a
+                      href={previewEmailUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-8 py-4 bg-white/10 text-white border border-white/20 font-mono text-xs tracking-widest uppercase font-black transition-all duration-300 rounded-xl cursor-pointer hover:bg-white/20 active:scale-[0.98]"
+                    >
+                      VIEW EMAIL RECEIPT
+                    </a>
+                  )}
                   <button
                     type="button"
                     suppressHydrationWarning

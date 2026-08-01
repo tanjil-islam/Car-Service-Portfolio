@@ -1,4 +1,7 @@
-import { Wrench, Car, Settings, Box, PenTool, Search, Shield, Zap } from "lucide-react";
+import { 
+  Wrench, Car, Settings, Box, PenTool, Search, Shield, Zap,
+  Snowflake, BatteryCharging, Crosshair, Sparkles, Gauge, Truck, CheckCircle
+} from "lucide-react";
 
 export interface ServiceItem {
   id: string;
@@ -72,6 +75,101 @@ export const servicesData: ServiceItem[] = [
     category: "bodywork",
     price: "Market Rate",
     specs: ["OEM Certified", "Imported Components", "Warranty Included"]
+  }
+];
+
+export interface GridServiceItem {
+  id: string;
+  title: string;
+  icon: any;
+  image: string;
+  link: string;
+}
+
+export const gridServicesData: GridServiceItem[] = [
+  {
+    id: "grid-1",
+    title: "General Service",
+    icon: Wrench,
+    image: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-2",
+    title: "Engine Repair",
+    icon: Settings,
+    image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-3",
+    title: "Transmission Repair",
+    icon: Settings,
+    image: "https://images.unsplash.com/photo-1600705578768-4663a84f3e6f?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-4",
+    title: "Dent & Paint",
+    icon: PenTool,
+    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-5",
+    title: "AC Service",
+    icon: Snowflake,
+    image: "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-6",
+    title: "Electrical Diagnostics",
+    icon: Zap,
+    image: "https://images.unsplash.com/photo-1562426509-5044a121aa49?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-7",
+    title: "Hybrid Vehicle Service",
+    icon: BatteryCharging,
+    image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-8",
+    title: "Wheel Alignment",
+    icon: Crosshair,
+    image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-9",
+    title: "Car Detailing",
+    icon: Sparkles,
+    image: "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-10",
+    title: "Performance Tuning",
+    icon: Gauge,
+    image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-11",
+    title: "Roadside Assistance",
+    icon: Truck,
+    image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+    link: "/booking"
+  },
+  {
+    id: "grid-12",
+    title: "Pre-Purchase Car Inspection (PPI)",
+    icon: Search,
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+    link: "/booking"
   }
 ];
 
@@ -168,7 +266,15 @@ export const caseFiles: CaseFile[] = [
 ];
 
 
-export const testimonialsData = [
+export interface Testimonial {
+  id?: string;
+  rating: number;
+  quote: string;
+  name: string;
+  vehicle: string;
+}
+
+export const testimonialsData: Testimonial[] = [
   {
     rating: 5,
     quote: "Roadmen completely transformed how I service my car. The home service is incredibly convenient and professional.",

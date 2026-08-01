@@ -17,11 +17,12 @@ export default function Navbar() {
   }, [scrollY]);
 
   const navLinks = [
-    { href: "#hero", label: "HOME" },
-    { href: "#parts", label: "PARTS" },
-    { href: "#services", label: "SERVICES" },
-    { href: "#about", label: "ABOUT" },
-    { href: "#work", label: "PORTFOLIO" },
+    { href: "/#hero", label: "HOME" },
+    { href: "/parts", label: "PARTS" },
+    { href: "/services", label: "SERVICES" },
+    { href: "/#about", label: "ABOUT" },
+    { href: "/#work", label: "PORTFOLIO" },
+    { href: "/contact", label: "CONTACT" },
   ];
 
   return (
@@ -36,7 +37,7 @@ export default function Navbar() {
         <div className="w-full max-w-[1920px] mx-auto grid grid-cols-2 lg:grid-cols-3 items-center">
           {/* LOGO BLOCK - Left Aligned */}
           <div className="flex items-center justify-start">
-            <a href="#hero" className="flex items-center gap-3.5 group cursor-pointer">
+            <a href="/#hero" className="flex items-center gap-3.5 group cursor-pointer">
               <Image src="/images/logo.png" alt="Roadmen Logo" width={48} height={48} className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-full border-2 border-plasma/60 shadow-glow-plasma-md transition-transform duration-300 group-hover:scale-105" />
               <div className="flex flex-col">
                 <span className="font-bebas text-3xl md:text-4xl tracking-widest text-text leading-none uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] transition-colors group-hover:text-plasma">
@@ -76,7 +77,7 @@ export default function Navbar() {
 
             {/* Book Appointment CTA */}
             <a
-              href="#booking"
+              href="/booking"
               className="hidden sm:inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-plasma text-void text-xs font-mono tracking-widest font-black uppercase transition-all duration-300 hover:bg-white hover:text-void rounded-full shadow-glow-plasma-md hover:scale-105 cursor-pointer"
             >
               <span>BOOK APPOINTMENT</span>
@@ -105,9 +106,9 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-void/98 backdrop-blur-2xl flex flex-col justify-center items-center px-6 lg:hidden border-l border-white/10"
+            className="fixed inset-0 z-40 bg-void/98 backdrop-blur-2xl flex flex-col justify-start items-center pt-28 pb-10 px-6 lg:hidden border-l border-white/10 overflow-y-auto"
           >
-            <div className="flex flex-col gap-6 text-center w-full max-w-sm">
+            <div className="flex flex-col gap-6 text-center w-full max-w-sm my-auto">
               {navLinks.map((link, idx) => (
                 <motion.a
                   initial={{ opacity: 0, y: 20 }}
@@ -122,29 +123,29 @@ export default function Navbar() {
                 </motion.a>
               ))}
 
-              {/* Direct Phone Call Button for Mobile */}
-              <motion.a
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.08 + 0.1 }}
-                href="tel:+8801956455165"
-                className="mt-4 flex items-center justify-center gap-3 px-6 py-3 border border-plasma/40 text-plasma font-mono text-xs tracking-widest font-bold uppercase rounded-full bg-plasma/10"
-              >
-                <Phone size={16} />
-                <span>+880 1956-455165</span>
-              </motion.a>
-
               {/* Book Appointment Button for Mobile */}
               <motion.a
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.08 + 0.15 }}
-                href="#booking"
+                transition={{ delay: navLinks.length * 0.08 + 0.1 }}
+                href="/booking"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-8 py-4 bg-plasma text-void font-mono text-sm tracking-[0.2em] font-black uppercase rounded-full shadow-glow-plasma-md"
+                className="mt-4 flex items-center justify-center gap-2 px-8 py-4 bg-plasma text-void font-mono text-sm tracking-[0.2em] font-black uppercase rounded-full shadow-glow-plasma-md"
               >
                 <span>BOOK APPOINTMENT</span>
                 <ArrowUpRight size={16} />
+              </motion.a>
+
+              {/* Direct Phone Call Button for Mobile */}
+              <motion.a
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.08 + 0.15 }}
+                href="tel:+8801956455165"
+                className="flex items-center justify-center gap-3 px-6 py-3 border border-plasma/40 text-plasma font-mono text-xs tracking-widest font-bold uppercase rounded-full bg-plasma/10"
+              >
+                <Phone size={16} />
+                <span>+880 1956-455165</span>
               </motion.a>
             </div>
           </motion.div>
