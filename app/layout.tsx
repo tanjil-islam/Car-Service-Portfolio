@@ -5,21 +5,21 @@ import "./globals.css";
 const fontBebas = Bebas_Neue({
   subsets: ["latin"],
   weight: ["400"],
-  variable: "--font-bebas",
+  variable: "--font-bebas-base",
   display: 'swap',
 });
 
 const fontInter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
-  variable: "--font-inter",
+  variable: "--font-inter-base",
   display: 'swap',
 });
 
 const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "700", "800"],
-  variable: "--font-mono",
+  variable: "--font-mono-base",
   display: 'swap',
 });
 

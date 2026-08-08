@@ -9,19 +9,19 @@
   --color-text: #FAFAFA;      /* Crisp White */
   --color-muted: #A1A1AA;     /* Zinc 400 */
   
-  --color-plasma: #D6FF00;    /* Acid Green */
+  --color-plasma: #FF5500;    /* Orange */
   --color-gold: #E4E4E7;      /* Zinc 200 */
-  --color-holo: #D6FF00;      /* Acid Green (kept for legacy classes) */
+  --color-holo: #FF5500;      /* Orange (kept for legacy classes) */
   
   --color-steel: #09090b;     /* Deep Zinc */
   --color-grid: rgba(255, 255, 255, 0.03); /* Barely visible grid */
 
   /* Standardized Glow Shadows */
-  --shadow-glow-plasma-sm: 0 0 10px rgba(214, 255, 0, 0.3);
-  --shadow-glow-plasma-md: 0 0 20px rgba(214, 255, 0, 0.5);
-  --shadow-glow-plasma-lg: 0 0 30px rgba(214, 255, 0, 0.8);
+  --shadow-glow-plasma-sm: 0 0 10px rgba(255, 85, 0, 0.3);
+  --shadow-glow-plasma-md: 0 0 20px rgba(255, 85, 0, 0.5);
+  --shadow-glow-plasma-lg: 0 0 30px rgba(255, 85, 0, 0.8);
   
-  --drop-shadow-glow-plasma: 0 0 10px rgba(214, 255, 0, 0.5);
+  --drop-shadow-glow-plasma: 0 0 10px rgba(255, 85, 0, 0.5);
 
   /* Standardized Viewport and Sizing Dimensions */
   --spacing-40vh: 40vh;
@@ -41,16 +41,16 @@
   --text-9vw: 9vw;
   --text-12vw: 12vw;
 
-  --font-bebas: var(--font-bebas), sans-serif;
-  --font-inter: var(--font-inter), sans-serif;
-  --font-mono: var(--font-mono), monospace;
+  --font-bebas: var(--font-bebas-base), sans-serif;
+  --font-inter: var(--font-inter-base), sans-serif;
+  --font-mono: var(--font-mono-base), monospace;
   
-  --font-display: var(--font-bebas), sans-serif;
-  --font-body: var(--font-inter), sans-serif;
+  --font-display: var(--font-bebas-base), sans-serif;
+  --font-body: var(--font-inter-base), sans-serif;
 }
 
 ::selection {
-  background-color: #D6FF00;
+  background-color: #FF5500;
   color: #050505;
 }
 
@@ -59,7 +59,7 @@ html, body {
   padding: 0;
   background-color: #050505;
   color: #FAFAFA;
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-inter-base), sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -71,11 +71,11 @@ html, body {
   background: #050505;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(214, 255, 0, 0.5);
+  background: rgba(255, 85, 0, 0.5);
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D6FF00;
+  background: #FF5500;
 }
 
 /* 3D transitions & Utility classes */
